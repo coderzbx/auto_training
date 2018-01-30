@@ -95,6 +95,18 @@ class ProcessLabelHandler(tornado.web.RequestHandler):
                 task_count = 0
                 err_code = 1
             else:
+                if not os.path.exists(self.temp_dir):
+                    os.mkdir(self.temp_dir)
+                else:
+                    # clean this directory
+                    tmp_dirs = os.listdir(self.temp_dir)
+                    for tmp_dir in tmp_dirs:
+                        tmp_path = os.path.join(self.temp_dir, tmp_dir)
+                        if os.path.isfile(tmp_path):
+                            os.remove(tmp_path)
+                        else:
+                            shutil.rmtree(tmp_path)
+
                 err_code = 0
                 for dir in range(max_packages):
                     csv_name = "ext-" + str(dir) + ".csv"
@@ -247,10 +259,12 @@ class ProcessLabelHandler(tornado.web.RequestHandler):
                 label = label.strip()
 
                 if not image.startswith("ext-") or not label.startswith("ext-"):
+                    line_str = f.readline()
                     continue
 
                 origin_image = os.path.join(root_dir, image[4:])
                 if not os.path.exists(origin_image):
+                    line_str = f.readline()
                     self.logger.error("package:{}, file missing:[{}]=>[{}]".format(package_index, image, label))
                     continue
                 else:
@@ -258,6 +272,7 @@ class ProcessLabelHandler(tornado.web.RequestHandler):
                     shutil.copy(origin_image, dest_origin_image)
 
                 if not os.path.exists(os.path.join(root_dir, label)):
+                    line_str = f.readline()
                     self.logger.error("package:{}, file missing:[{}]=>[{}]".format(package_index, image, label))
                     continue
 
