@@ -1,5 +1,6 @@
 # -*- coding:utf-8 -*-
-
+import sys
+sys.path.insert(0, "/opt/auto_training")
 import errno
 import json
 import logging
