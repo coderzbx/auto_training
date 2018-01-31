@@ -9,12 +9,12 @@ import signal
 
 import tornado.ioloop
 import tornado.web
-from road_marking.model_release import ModelReleaseHandler
-from road_marking.task_divide import TaskDivideHandler
-from traffic_sign.task_divide import SignTaskDivideHandler
 
+from road_marking.model_release import ModelReleaseHandler
 from road_marking.process_label import ProcessLabelHandler
-from training import StartTrainingHandler
+from road_marking.task_divide import TaskDivideHandler
+from road_marking.training import StartTrainingHandler
+from traffic_sign.task_divide import SignTaskDivideHandler
 from utils import host_ip, port
 
 
