@@ -35,6 +35,7 @@ self_road_chn_labels = {
     Label('distance',       17, 17,   (255, 128, 255),    u'车距确认线'),
     Label('road',           18, 18,   (192, 192, 192),    u'道路'),
     Label('objects',        19, 19,   (128, 0, 0),        u'车辆及路面上其他物体'),
+    Label('emergency',      20, 20,   (229, 152, 102),    u'虚拟应急车道线'),
 }
 
 
