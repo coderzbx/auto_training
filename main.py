@@ -15,7 +15,8 @@ from road_marking.model_release import ModelReleaseHandler
 from road_marking.process_label import ProcessLabelHandler
 from road_marking.task_divide import TaskDivideHandler
 from road_marking.training import StartTrainingHandler
-from traffic_sign.task_divide import SignTaskDivideHandler
+from road_marking.check_label import CheckLabelHandler
+
 from utils import host_ip, port
 
 
@@ -75,8 +76,8 @@ def make_app():
     return tornado.web.Application([
         (r"/update", MainHandler),
         (r"/task", TaskDivideHandler),
-        (r"/traffic_sign/task", SignTaskDivideHandler),
         (r"/label", ProcessLabelHandler),
+        (r"/check", CheckLabelHandler),
         (r"/training", StartTrainingHandler),
         (r"/release", ModelReleaseHandler),
     ])

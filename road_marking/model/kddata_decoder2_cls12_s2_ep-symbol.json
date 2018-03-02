@@ -1,0 +1,3918 @@
+{
+  "nodes": [
+    {
+      "op": "null", 
+      "name": "data", 
+      "inputs": []
+    }, 
+    {
+      "op": "null", 
+      "name": "conv1a_weight", 
+      "inputs": []
+    }, 
+    {
+      "op": "Convolution", 
+      "name": "conv1a", 
+      "attrs": {
+        "cudnn_off": "False", 
+        "dilate": "(1, 1)", 
+        "kernel": "(3, 3)", 
+        "no_bias": "True", 
+        "num_filter": "64", 
+        "num_group": "1", 
+        "pad": "(1, 1)", 
+        "stride": "(1, 1)", 
+        "workspace": "1024"
+      }, 
+      "inputs": [[0, 0, 0], [1, 0, 0]]
+    }, 
+    {
+      "op": "null", 
+      "name": "bn2a_branch2a_gamma", 
+      "inputs": []
+    }, 
+    {
+      "op": "null", 
+      "name": "bn2a_branch2a_beta", 
+      "attrs": {
+        "__lr_mult__": "2.", 
+        "__wd_mult__": "0."
+      }, 
+      "inputs": []
+    }, 
+    {
+      "op": "null", 
+      "name": "bn2a_branch2a_moving_mean", 
+      "attrs": {
+        "__init__": "[\"zero\", {}]", 
+        "eps": "1.001e-05", 
+        "fix_gamma": "False", 
+        "use_global_stats": "False"
+      }, 
+      "inputs": []
+    }, 
+    {
+      "op": "null", 
+      "name": "bn2a_branch2a_moving_var", 
+      "attrs": {
+        "__init__": "[\"one\", {}]", 
+        "eps": "1.001e-05", 
+        "fix_gamma": "False", 
+        "use_global_stats": "False"
+      }, 
+      "inputs": []
+    }, 
+    {
+      "op": "BatchNorm", 
+      "name": "bn2a_branch2a", 
+      "attrs": {
+        "eps": "1.001e-05", 
+        "fix_gamma": "False", 
+        "use_global_stats": "False"
+      }, 
+      "inputs": [[2, 0, 0], [3, 0, 0], [4, 0, 0], [5, 0, 1], [6, 0, 1]]
+    }, 
+    {
+      "op": "Activation", 
+      "name": "res2a_branch2a_relu", 
+      "attrs": {"act_type": "relu"}, 
+      "inputs": [[7, 0, 0]]
+    }, 
+    {
+      "op": "null", 
+      "name": "res2a_branch1_weight", 
+      "inputs": []
+    }, 
+    {
+      "op": "Convolution", 
+      "name": "res2a_branch1", 
+      "attrs": {
+        "cudnn_off": "False", 
+        "dilate": "(1, 1)", 
+        "kernel": "(1, 1)", 
+        "no_bias": "True", 
+        "num_filter": "128", 
+        "num_group": "1", 
+        "pad": "(0, 0)", 
+        "stride": "(2, 2)", 
+        "workspace": "1024"
+      }, 
+      "inputs": [[8, 0, 0], [9, 0, 0]]
+    }, 
+    {
+      "op": "null", 
+      "name": "res2a_branch2a_weight", 
+      "inputs": []
+    }, 
+    {
+      "op": "Convolution", 
+      "name": "res2a_branch2a", 
+      "attrs": {
+        "cudnn_off": "False", 
+        "dilate": "(1, 1)", 
+        "kernel": "(3, 3)", 
+        "no_bias": "True", 
+        "num_filter": "128", 
+        "num_group": "1", 
+        "pad": "(1, 1)", 
+        "stride": "(2, 2)", 
+        "workspace": "1024"
+      }, 
+      "inputs": [[8, 0, 0], [11, 0, 0]]
+    }, 
+    {
+      "op": "null", 
+      "name": "bn2a_branch2b1_gamma", 
+      "inputs": []
+    }, 
+    {
+      "op": "null", 
+      "name": "bn2a_branch2b1_beta", 
+      "attrs": {
+        "__lr_mult__": "2.", 
+        "__wd_mult__": "0."
+      }, 
+      "inputs": []
+    }, 
+    {
+      "op": "null", 
+      "name": "bn2a_branch2b1_moving_mean", 
+      "attrs": {
+        "__init__": "[\"zero\", {}]", 
+        "eps": "1.001e-05", 
+        "fix_gamma": "False", 
+        "use_global_stats": "False"
+      }, 
+      "inputs": []
+    }, 
+    {
+      "op": "null", 
+      "name": "bn2a_branch2b1_moving_var", 
+      "attrs": {
+        "__init__": "[\"one\", {}]", 
+        "eps": "1.001e-05", 
+        "fix_gamma": "False", 
+        "use_global_stats": "False"
+      }, 
+      "inputs": []
+    }, 
+    {
+      "op": "BatchNorm", 
+      "name": "bn2a_branch2b1", 
+      "attrs": {
+        "eps": "1.001e-05", 
+        "fix_gamma": "False", 
+        "use_global_stats": "False"
+      }, 
+      "inputs": [[12, 0, 0], [13, 0, 0], [14, 0, 0], [15, 0, 1], [16, 0, 1]]
+    }, 
+    {
+      "op": "Activation", 
+      "name": "res2a_branch2b1_relu", 
+      "attrs": {"act_type": "relu"}, 
+      "inputs": [[17, 0, 0]]
+    }, 
+    {
+      "op": "null", 
+      "name": "res2a_branch2b1_weight", 
+      "inputs": []
+    }, 
+    {
+      "op": "Convolution", 
+      "name": "res2a_branch2b1", 
+      "attrs": {
+        "cudnn_off": "False", 
+        "dilate": "(1, 1)", 
+        "kernel": "(3, 3)", 
+        "no_bias": "True", 
+        "num_filter": "128", 
+        "num_group": "1", 
+        "pad": "(1, 1)", 
+        "stride": "(1, 1)", 
+        "workspace": "1024"
+      }, 
+      "inputs": [[18, 0, 0], [19, 0, 0]]
+    }, 
+    {
+      "op": "elemwise_add", 
+      "name": "_plus0", 
+      "inputs": [[10, 0, 0], [20, 0, 0]]
+    }, 
+    {
+      "op": "null", 
+      "name": "bn2b1_branch2a_gamma", 
+      "inputs": []
+    }, 
+    {
+      "op": "null", 
+      "name": "bn2b1_branch2a_beta", 
+      "attrs": {
+        "__lr_mult__": "2.", 
+        "__wd_mult__": "0."
+      }, 
+      "inputs": []
+    }, 
+    {
+      "op": "null", 
+      "name": "bn2b1_branch2a_moving_mean", 
+      "attrs": {
+        "__init__": "[\"zero\", {}]", 
+        "eps": "1.001e-05", 
+        "fix_gamma": "False", 
+        "use_global_stats": "False"
+      }, 
+      "inputs": []
+    }, 
+    {
+      "op": "null", 
+      "name": "bn2b1_branch2a_moving_var", 
+      "attrs": {
+        "__init__": "[\"one\", {}]", 
+        "eps": "1.001e-05", 
+        "fix_gamma": "False", 
+        "use_global_stats": "False"
+      }, 
+      "inputs": []
+    }, 
+    {
+      "op": "BatchNorm", 
+      "name": "bn2b1_branch2a", 
+      "attrs": {
+        "eps": "1.001e-05", 
+        "fix_gamma": "False", 
+        "use_global_stats": "False"
+      }, 
+      "inputs": [[21, 0, 0], [22, 0, 0], [23, 0, 0], [24, 0, 1], [25, 0, 1]]
+    }, 
+    {
+      "op": "Activation", 
+      "name": "res2b1_branch2a_relu", 
+      "attrs": {"act_type": "relu"}, 
+      "inputs": [[26, 0, 0]]
+    }, 
+    {
+      "op": "null", 
+      "name": "res2b1_branch2a_weight", 
+      "inputs": []
+    }, 
+    {
+      "op": "Convolution", 
+      "name": "res2b1_branch2a", 
+      "attrs": {
+        "cudnn_off": "False", 
+        "dilate": "(1, 1)", 
+        "kernel": "(3, 3)", 
+        "no_bias": "True", 
+        "num_filter": "128", 
+        "num_group": "1", 
+        "pad": "(1, 1)", 
+        "stride": "(1, 1)", 
+        "workspace": "1024"
+      }, 
+      "inputs": [[27, 0, 0], [28, 0, 0]]
+    }, 
+    {
+      "op": "null", 
+      "name": "bn2b1_branch2b1_gamma", 
+      "inputs": []
+    }, 
+    {
+      "op": "null", 
+      "name": "bn2b1_branch2b1_beta", 
+      "attrs": {
+        "__lr_mult__": "2.", 
+        "__wd_mult__": "0."
+      }, 
+      "inputs": []
+    }, 
+    {
+      "op": "null", 
+      "name": "bn2b1_branch2b1_moving_mean", 
+      "attrs": {
+        "__init__": "[\"zero\", {}]", 
+        "eps": "1.001e-05", 
+        "fix_gamma": "False", 
+        "use_global_stats": "False"
+      }, 
+      "inputs": []
+    }, 
+    {
+      "op": "null", 
+      "name": "bn2b1_branch2b1_moving_var", 
+      "attrs": {
+        "__init__": "[\"one\", {}]", 
+        "eps": "1.001e-05", 
+        "fix_gamma": "False", 
+        "use_global_stats": "False"
+      }, 
+      "inputs": []
+    }, 
+    {
+      "op": "BatchNorm", 
+      "name": "bn2b1_branch2b1", 
+      "attrs": {
+        "eps": "1.001e-05", 
+        "fix_gamma": "False", 
+        "use_global_stats": "False"
+      }, 
+      "inputs": [[29, 0, 0], [30, 0, 0], [31, 0, 0], [32, 0, 1], [33, 0, 1]]
+    }, 
+    {
+      "op": "Activation", 
+      "name": "res2b1_branch2b1_relu", 
+      "attrs": {"act_type": "relu"}, 
+      "inputs": [[34, 0, 0]]
+    }, 
+    {
+      "op": "null", 
+      "name": "res2b1_branch2b1_weight", 
+      "inputs": []
+    }, 
+    {
+      "op": "Convolution", 
+      "name": "res2b1_branch2b1", 
+      "attrs": {
+        "cudnn_off": "False", 
+        "dilate": "(1, 1)", 
+        "kernel": "(3, 3)", 
+        "no_bias": "True", 
+        "num_filter": "128", 
+        "num_group": "1", 
+        "pad": "(1, 1)", 
+        "stride": "(1, 1)", 
+        "workspace": "1024"
+      }, 
+      "inputs": [[35, 0, 0], [36, 0, 0]]
+    }, 
+    {
+      "op": "elemwise_add", 
+      "name": "_plus1", 
+      "inputs": [[21, 0, 0], [37, 0, 0]]
+    }, 
+    {
+      "op": "null", 
+      "name": "bn2b2_branch2a_gamma", 
+      "inputs": []
+    }, 
+    {
+      "op": "null", 
+      "name": "bn2b2_branch2a_beta", 
+      "attrs": {
+        "__lr_mult__": "2.", 
+        "__wd_mult__": "0."
+      }, 
+      "inputs": []
+    }, 
+    {
+      "op": "null", 
+      "name": "bn2b2_branch2a_moving_mean", 
+      "attrs": {
+        "__init__": "[\"zero\", {}]", 
+        "eps": "1.001e-05", 
+        "fix_gamma": "False", 
+        "use_global_stats": "False"
+      }, 
+      "inputs": []
+    }, 
+    {
+      "op": "null", 
+      "name": "bn2b2_branch2a_moving_var", 
+      "attrs": {
+        "__init__": "[\"one\", {}]", 
+        "eps": "1.001e-05", 
+        "fix_gamma": "False", 
+        "use_global_stats": "False"
+      }, 
+      "inputs": []
+    }, 
+    {
+      "op": "BatchNorm", 
+      "name": "bn2b2_branch2a", 
+      "attrs": {
+        "eps": "1.001e-05", 
+        "fix_gamma": "False", 
+        "use_global_stats": "False"
+      }, 
+      "inputs": [[38, 0, 0], [39, 0, 0], [40, 0, 0], [41, 0, 1], [42, 0, 1]]
+    }, 
+    {
+      "op": "Activation", 
+      "name": "res2b2_branch2a_relu", 
+      "attrs": {"act_type": "relu"}, 
+      "inputs": [[43, 0, 0]]
+    }, 
+    {
+      "op": "null", 
+      "name": "res2b2_branch2a_weight", 
+      "inputs": []
+    }, 
+    {
+      "op": "Convolution", 
+      "name": "res2b2_branch2a", 
+      "attrs": {
+        "cudnn_off": "False", 
+        "dilate": "(1, 1)", 
+        "kernel": "(3, 3)", 
+        "no_bias": "True", 
+        "num_filter": "128", 
+        "num_group": "1", 
+        "pad": "(1, 1)", 
+        "stride": "(1, 1)", 
+        "workspace": "1024"
+      }, 
+      "inputs": [[44, 0, 0], [45, 0, 0]]
+    }, 
+    {
+      "op": "null", 
+      "name": "bn2b2_branch2b1_gamma", 
+      "inputs": []
+    }, 
+    {
+      "op": "null", 
+      "name": "bn2b2_branch2b1_beta", 
+      "attrs": {
+        "__lr_mult__": "2.", 
+        "__wd_mult__": "0."
+      }, 
+      "inputs": []
+    }, 
+    {
+      "op": "null", 
+      "name": "bn2b2_branch2b1_moving_mean", 
+      "attrs": {
+        "__init__": "[\"zero\", {}]", 
+        "eps": "1.001e-05", 
+        "fix_gamma": "False", 
+        "use_global_stats": "False"
+      }, 
+      "inputs": []
+    }, 
+    {
+      "op": "null", 
+      "name": "bn2b2_branch2b1_moving_var", 
+      "attrs": {
+        "__init__": "[\"one\", {}]", 
+        "eps": "1.001e-05", 
+        "fix_gamma": "False", 
+        "use_global_stats": "False"
+      }, 
+      "inputs": []
+    }, 
+    {
+      "op": "BatchNorm", 
+      "name": "bn2b2_branch2b1", 
+      "attrs": {
+        "eps": "1.001e-05", 
+        "fix_gamma": "False", 
+        "use_global_stats": "False"
+      }, 
+      "inputs": [[46, 0, 0], [47, 0, 0], [48, 0, 0], [49, 0, 1], [50, 0, 1]]
+    }, 
+    {
+      "op": "Activation", 
+      "name": "res2b2_branch2b1_relu", 
+      "attrs": {"act_type": "relu"}, 
+      "inputs": [[51, 0, 0]]
+    }, 
+    {
+      "op": "null", 
+      "name": "res2b2_branch2b1_weight", 
+      "inputs": []
+    }, 
+    {
+      "op": "Convolution", 
+      "name": "res2b2_branch2b1", 
+      "attrs": {
+        "cudnn_off": "False", 
+        "dilate": "(1, 1)", 
+        "kernel": "(3, 3)", 
+        "no_bias": "True", 
+        "num_filter": "128", 
+        "num_group": "1", 
+        "pad": "(1, 1)", 
+        "stride": "(1, 1)", 
+        "workspace": "1024"
+      }, 
+      "inputs": [[52, 0, 0], [53, 0, 0]]
+    }, 
+    {
+      "op": "elemwise_add", 
+      "name": "_plus2", 
+      "inputs": [[38, 0, 0], [54, 0, 0]]
+    }, 
+    {
+      "op": "null", 
+      "name": "bn3a_branch2a_gamma", 
+      "inputs": []
+    }, 
+    {
+      "op": "null", 
+      "name": "bn3a_branch2a_beta", 
+      "attrs": {
+        "__lr_mult__": "2.", 
+        "__wd_mult__": "0."
+      }, 
+      "inputs": []
+    }, 
+    {
+      "op": "null", 
+      "name": "bn3a_branch2a_moving_mean", 
+      "attrs": {
+        "__init__": "[\"zero\", {}]", 
+        "eps": "1.001e-05", 
+        "fix_gamma": "False", 
+        "use_global_stats": "False"
+      }, 
+      "inputs": []
+    }, 
+    {
+      "op": "null", 
+      "name": "bn3a_branch2a_moving_var", 
+      "attrs": {
+        "__init__": "[\"one\", {}]", 
+        "eps": "1.001e-05", 
+        "fix_gamma": "False", 
+        "use_global_stats": "False"
+      }, 
+      "inputs": []
+    }, 
+    {
+      "op": "BatchNorm", 
+      "name": "bn3a_branch2a", 
+      "attrs": {
+        "eps": "1.001e-05", 
+        "fix_gamma": "False", 
+        "use_global_stats": "False"
+      }, 
+      "inputs": [[55, 0, 0], [56, 0, 0], [57, 0, 0], [58, 0, 1], [59, 0, 1]]
+    }, 
+    {
+      "op": "Activation", 
+      "name": "res3a_branch2a_relu", 
+      "attrs": {"act_type": "relu"}, 
+      "inputs": [[60, 0, 0]]
+    }, 
+    {
+      "op": "null", 
+      "name": "gcn_middle_layer_2_1_k_1_weight", 
+      "inputs": []
+    }, 
+    {
+      "op": "null", 
+      "name": "gcn_middle_layer_2_1_k_1_bias", 
+      "attrs": {
+        "__lr_mult__": "2.", 
+        "__wd_mult__": "0."
+      }, 
+      "inputs": []
+    }, 
+    {
+      "op": "Convolution", 
+      "name": "gcn_middle_layer_2_1_k_1", 
+      "attrs": {
+        "dilate": "(1, 1)", 
+        "kernel": "(15, 1)", 
+        "no_bias": "False", 
+        "num_filter": "12", 
+        "num_group": "1", 
+        "pad": "(7, 0)", 
+        "stride": "(1, 1)", 
+        "workspace": "512"
+      }, 
+      "inputs": [[61, 0, 0], [62, 0, 0], [63, 0, 0]]
+    }, 
+    {
+      "op": "null", 
+      "name": "gcn_middle_layer_2_1_1_k_weight", 
+      "inputs": []
+    }, 
+    {
+      "op": "null", 
+      "name": "gcn_middle_layer_2_1_1_k_bias", 
+      "attrs": {
+        "__lr_mult__": "2.", 
+        "__wd_mult__": "0."
+      }, 
+      "inputs": []
+    }, 
+    {
+      "op": "Convolution", 
+      "name": "gcn_middle_layer_2_1_1_k", 
+      "attrs": {
+        "dilate": "(1, 1)", 
+        "kernel": "(1, 15)", 
+        "no_bias": "False", 
+        "num_filter": "12", 
+        "num_group": "1", 
+        "pad": "(0, 7)", 
+        "stride": "(1, 1)", 
+        "workspace": "512"
+      }, 
+      "inputs": [[64, 0, 0], [65, 0, 0], [66, 0, 0]]
+    }, 
+    {
+      "op": "null", 
+      "name": "gcn_middle_layer_2_2_1_k_weight", 
+      "inputs": []
+    }, 
+    {
+      "op": "null", 
+      "name": "gcn_middle_layer_2_2_1_k_bias", 
+      "attrs": {
+        "__lr_mult__": "2.", 
+        "__wd_mult__": "0."
+      }, 
+      "inputs": []
+    }, 
+    {
+      "op": "Convolution", 
+      "name": "gcn_middle_layer_2_2_1_k", 
+      "attrs": {
+        "dilate": "(1, 1)", 
+        "kernel": "(1, 15)", 
+        "no_bias": "False", 
+        "num_filter": "12", 
+        "num_group": "1", 
+        "pad": "(0, 7)", 
+        "stride": "(1, 1)", 
+        "workspace": "512"
+      }, 
+      "inputs": [[61, 0, 0], [68, 0, 0], [69, 0, 0]]
+    }, 
+    {
+      "op": "null", 
+      "name": "gcn_middle_layer_2_2_k_1_weight", 
+      "inputs": []
+    }, 
+    {
+      "op": "null", 
+      "name": "gcn_middle_layer_2_2_k_1_bias", 
+      "attrs": {
+        "__lr_mult__": "2.", 
+        "__wd_mult__": "0."
+      }, 
+      "inputs": []
+    }, 
+    {
+      "op": "Convolution", 
+      "name": "gcn_middle_layer_2_2_k_1", 
+      "attrs": {
+        "dilate": "(1, 1)", 
+        "kernel": "(15, 1)", 
+        "no_bias": "False", 
+        "num_filter": "12", 
+        "num_group": "1", 
+        "pad": "(7, 0)", 
+        "stride": "(1, 1)", 
+        "workspace": "512"
+      }, 
+      "inputs": [[70, 0, 0], [71, 0, 0], [72, 0, 0]]
+    }, 
+    {
+      "op": "elemwise_add", 
+      "name": "_plus19", 
+      "inputs": [[67, 0, 0], [73, 0, 0]]
+    }, 
+    {
+      "op": "null", 
+      "name": "res3a_branch1_weight", 
+      "inputs": []
+    }, 
+    {
+      "op": "Convolution", 
+      "name": "res3a_branch1", 
+      "attrs": {
+        "cudnn_off": "False", 
+        "dilate": "(1, 1)", 
+        "kernel": "(1, 1)", 
+        "no_bias": "True", 
+        "num_filter": "256", 
+        "num_group": "1", 
+        "pad": "(0, 0)", 
+        "stride": "(2, 2)", 
+        "workspace": "1024"
+      }, 
+      "inputs": [[61, 0, 0], [75, 0, 0]]
+    }, 
+    {
+      "op": "null", 
+      "name": "res3a_branch2a_weight", 
+      "inputs": []
+    }, 
+    {
+      "op": "Convolution", 
+      "name": "res3a_branch2a", 
+      "attrs": {
+        "cudnn_off": "False", 
+        "dilate": "(1, 1)", 
+        "kernel": "(3, 3)", 
+        "no_bias": "True", 
+        "num_filter": "256", 
+        "num_group": "1", 
+        "pad": "(1, 1)", 
+        "stride": "(2, 2)", 
+        "workspace": "1024"
+      }, 
+      "inputs": [[61, 0, 0], [77, 0, 0]]
+    }, 
+    {
+      "op": "null", 
+      "name": "bn3a_branch2b1_gamma", 
+      "inputs": []
+    }, 
+    {
+      "op": "null", 
+      "name": "bn3a_branch2b1_beta", 
+      "attrs": {
+        "__lr_mult__": "2.", 
+        "__wd_mult__": "0."
+      }, 
+      "inputs": []
+    }, 
+    {
+      "op": "null", 
+      "name": "bn3a_branch2b1_moving_mean", 
+      "attrs": {
+        "__init__": "[\"zero\", {}]", 
+        "eps": "1.001e-05", 
+        "fix_gamma": "False", 
+        "use_global_stats": "False"
+      }, 
+      "inputs": []
+    }, 
+    {
+      "op": "null", 
+      "name": "bn3a_branch2b1_moving_var", 
+      "attrs": {
+        "__init__": "[\"one\", {}]", 
+        "eps": "1.001e-05", 
+        "fix_gamma": "False", 
+        "use_global_stats": "False"
+      }, 
+      "inputs": []
+    }, 
+    {
+      "op": "BatchNorm", 
+      "name": "bn3a_branch2b1", 
+      "attrs": {
+        "eps": "1.001e-05", 
+        "fix_gamma": "False", 
+        "use_global_stats": "False"
+      }, 
+      "inputs": [[78, 0, 0], [79, 0, 0], [80, 0, 0], [81, 0, 1], [82, 0, 1]]
+    }, 
+    {
+      "op": "Activation", 
+      "name": "res3a_branch2b1_relu", 
+      "attrs": {"act_type": "relu"}, 
+      "inputs": [[83, 0, 0]]
+    }, 
+    {
+      "op": "null", 
+      "name": "res3a_branch2b1_weight", 
+      "inputs": []
+    }, 
+    {
+      "op": "Convolution", 
+      "name": "res3a_branch2b1", 
+      "attrs": {
+        "cudnn_off": "False", 
+        "dilate": "(1, 1)", 
+        "kernel": "(3, 3)", 
+        "no_bias": "True", 
+        "num_filter": "256", 
+        "num_group": "1", 
+        "pad": "(1, 1)", 
+        "stride": "(1, 1)", 
+        "workspace": "1024"
+      }, 
+      "inputs": [[84, 0, 0], [85, 0, 0]]
+    }, 
+    {
+      "op": "elemwise_add", 
+      "name": "_plus3", 
+      "inputs": [[76, 0, 0], [86, 0, 0]]
+    }, 
+    {
+      "op": "null", 
+      "name": "bn3b1_branch2a_gamma", 
+      "inputs": []
+    }, 
+    {
+      "op": "null", 
+      "name": "bn3b1_branch2a_beta", 
+      "attrs": {
+        "__lr_mult__": "2.", 
+        "__wd_mult__": "0."
+      }, 
+      "inputs": []
+    }, 
+    {
+      "op": "null", 
+      "name": "bn3b1_branch2a_moving_mean", 
+      "attrs": {
+        "__init__": "[\"zero\", {}]", 
+        "eps": "1.001e-05", 
+        "fix_gamma": "False", 
+        "use_global_stats": "False"
+      }, 
+      "inputs": []
+    }, 
+    {
+      "op": "null", 
+      "name": "bn3b1_branch2a_moving_var", 
+      "attrs": {
+        "__init__": "[\"one\", {}]", 
+        "eps": "1.001e-05", 
+        "fix_gamma": "False", 
+        "use_global_stats": "False"
+      }, 
+      "inputs": []
+    }, 
+    {
+      "op": "BatchNorm", 
+      "name": "bn3b1_branch2a", 
+      "attrs": {
+        "eps": "1.001e-05", 
+        "fix_gamma": "False", 
+        "use_global_stats": "False"
+      }, 
+      "inputs": [[87, 0, 0], [88, 0, 0], [89, 0, 0], [90, 0, 1], [91, 0, 1]]
+    }, 
+    {
+      "op": "Activation", 
+      "name": "res3b1_branch2a_relu", 
+      "attrs": {"act_type": "relu"}, 
+      "inputs": [[92, 0, 0]]
+    }, 
+    {
+      "op": "null", 
+      "name": "res3b1_branch2a_weight", 
+      "inputs": []
+    }, 
+    {
+      "op": "Convolution", 
+      "name": "res3b1_branch2a", 
+      "attrs": {
+        "cudnn_off": "False", 
+        "dilate": "(1, 1)", 
+        "kernel": "(3, 3)", 
+        "no_bias": "True", 
+        "num_filter": "256", 
+        "num_group": "1", 
+        "pad": "(1, 1)", 
+        "stride": "(1, 1)", 
+        "workspace": "1024"
+      }, 
+      "inputs": [[93, 0, 0], [94, 0, 0]]
+    }, 
+    {
+      "op": "null", 
+      "name": "bn3b1_branch2b1_gamma", 
+      "inputs": []
+    }, 
+    {
+      "op": "null", 
+      "name": "bn3b1_branch2b1_beta", 
+      "attrs": {
+        "__lr_mult__": "2.", 
+        "__wd_mult__": "0."
+      }, 
+      "inputs": []
+    }, 
+    {
+      "op": "null", 
+      "name": "bn3b1_branch2b1_moving_mean", 
+      "attrs": {
+        "__init__": "[\"zero\", {}]", 
+        "eps": "1.001e-05", 
+        "fix_gamma": "False", 
+        "use_global_stats": "False"
+      }, 
+      "inputs": []
+    }, 
+    {
+      "op": "null", 
+      "name": "bn3b1_branch2b1_moving_var", 
+      "attrs": {
+        "__init__": "[\"one\", {}]", 
+        "eps": "1.001e-05", 
+        "fix_gamma": "False", 
+        "use_global_stats": "False"
+      }, 
+      "inputs": []
+    }, 
+    {
+      "op": "BatchNorm", 
+      "name": "bn3b1_branch2b1", 
+      "attrs": {
+        "eps": "1.001e-05", 
+        "fix_gamma": "False", 
+        "use_global_stats": "False"
+      }, 
+      "inputs": [[95, 0, 0], [96, 0, 0], [97, 0, 0], [98, 0, 1], [99, 0, 1]]
+    }, 
+    {
+      "op": "Activation", 
+      "name": "res3b1_branch2b1_relu", 
+      "attrs": {"act_type": "relu"}, 
+      "inputs": [[100, 0, 0]]
+    }, 
+    {
+      "op": "null", 
+      "name": "res3b1_branch2b1_weight", 
+      "inputs": []
+    }, 
+    {
+      "op": "Convolution", 
+      "name": "res3b1_branch2b1", 
+      "attrs": {
+        "cudnn_off": "False", 
+        "dilate": "(1, 1)", 
+        "kernel": "(3, 3)", 
+        "no_bias": "True", 
+        "num_filter": "256", 
+        "num_group": "1", 
+        "pad": "(1, 1)", 
+        "stride": "(1, 1)", 
+        "workspace": "1024"
+      }, 
+      "inputs": [[101, 0, 0], [102, 0, 0]]
+    }, 
+    {
+      "op": "elemwise_add", 
+      "name": "_plus4", 
+      "inputs": [[87, 0, 0], [103, 0, 0]]
+    }, 
+    {
+      "op": "null", 
+      "name": "bn3b2_branch2a_gamma", 
+      "inputs": []
+    }, 
+    {
+      "op": "null", 
+      "name": "bn3b2_branch2a_beta", 
+      "attrs": {
+        "__lr_mult__": "2.", 
+        "__wd_mult__": "0."
+      }, 
+      "inputs": []
+    }, 
+    {
+      "op": "null", 
+      "name": "bn3b2_branch2a_moving_mean", 
+      "attrs": {
+        "__init__": "[\"zero\", {}]", 
+        "eps": "1.001e-05", 
+        "fix_gamma": "False", 
+        "use_global_stats": "False"
+      }, 
+      "inputs": []
+    }, 
+    {
+      "op": "null", 
+      "name": "bn3b2_branch2a_moving_var", 
+      "attrs": {
+        "__init__": "[\"one\", {}]", 
+        "eps": "1.001e-05", 
+        "fix_gamma": "False", 
+        "use_global_stats": "False"
+      }, 
+      "inputs": []
+    }, 
+    {
+      "op": "BatchNorm", 
+      "name": "bn3b2_branch2a", 
+      "attrs": {
+        "eps": "1.001e-05", 
+        "fix_gamma": "False", 
+        "use_global_stats": "False"
+      }, 
+      "inputs": [[104, 0, 0], [105, 0, 0], [106, 0, 0], [107, 0, 1], [108, 0, 1]]
+    }, 
+    {
+      "op": "Activation", 
+      "name": "res3b2_branch2a_relu", 
+      "attrs": {"act_type": "relu"}, 
+      "inputs": [[109, 0, 0]]
+    }, 
+    {
+      "op": "null", 
+      "name": "res3b2_branch2a_weight", 
+      "inputs": []
+    }, 
+    {
+      "op": "Convolution", 
+      "name": "res3b2_branch2a", 
+      "attrs": {
+        "cudnn_off": "False", 
+        "dilate": "(1, 1)", 
+        "kernel": "(3, 3)", 
+        "no_bias": "True", 
+        "num_filter": "256", 
+        "num_group": "1", 
+        "pad": "(1, 1)", 
+        "stride": "(1, 1)", 
+        "workspace": "1024"
+      }, 
+      "inputs": [[110, 0, 0], [111, 0, 0]]
+    }, 
+    {
+      "op": "null", 
+      "name": "bn3b2_branch2b1_gamma", 
+      "inputs": []
+    }, 
+    {
+      "op": "null", 
+      "name": "bn3b2_branch2b1_beta", 
+      "attrs": {
+        "__lr_mult__": "2.", 
+        "__wd_mult__": "0."
+      }, 
+      "inputs": []
+    }, 
+    {
+      "op": "null", 
+      "name": "bn3b2_branch2b1_moving_mean", 
+      "attrs": {
+        "__init__": "[\"zero\", {}]", 
+        "eps": "1.001e-05", 
+        "fix_gamma": "False", 
+        "use_global_stats": "False"
+      }, 
+      "inputs": []
+    }, 
+    {
+      "op": "null", 
+      "name": "bn3b2_branch2b1_moving_var", 
+      "attrs": {
+        "__init__": "[\"one\", {}]", 
+        "eps": "1.001e-05", 
+        "fix_gamma": "False", 
+        "use_global_stats": "False"
+      }, 
+      "inputs": []
+    }, 
+    {
+      "op": "BatchNorm", 
+      "name": "bn3b2_branch2b1", 
+      "attrs": {
+        "eps": "1.001e-05", 
+        "fix_gamma": "False", 
+        "use_global_stats": "False"
+      }, 
+      "inputs": [[112, 0, 0], [113, 0, 0], [114, 0, 0], [115, 0, 1], [116, 0, 1]]
+    }, 
+    {
+      "op": "Activation", 
+      "name": "res3b2_branch2b1_relu", 
+      "attrs": {"act_type": "relu"}, 
+      "inputs": [[117, 0, 0]]
+    }, 
+    {
+      "op": "null", 
+      "name": "res3b2_branch2b1_weight", 
+      "inputs": []
+    }, 
+    {
+      "op": "Convolution", 
+      "name": "res3b2_branch2b1", 
+      "attrs": {
+        "cudnn_off": "False", 
+        "dilate": "(1, 1)", 
+        "kernel": "(3, 3)", 
+        "no_bias": "True", 
+        "num_filter": "256", 
+        "num_group": "1", 
+        "pad": "(1, 1)", 
+        "stride": "(1, 1)", 
+        "workspace": "1024"
+      }, 
+      "inputs": [[118, 0, 0], [119, 0, 0]]
+    }, 
+    {
+      "op": "elemwise_add", 
+      "name": "_plus5", 
+      "inputs": [[104, 0, 0], [120, 0, 0]]
+    }, 
+    {
+      "op": "null", 
+      "name": "bn4a_branch2a_gamma", 
+      "inputs": []
+    }, 
+    {
+      "op": "null", 
+      "name": "bn4a_branch2a_beta", 
+      "attrs": {
+        "__lr_mult__": "2.", 
+        "__wd_mult__": "0."
+      }, 
+      "inputs": []
+    }, 
+    {
+      "op": "null", 
+      "name": "bn4a_branch2a_moving_mean", 
+      "attrs": {
+        "__init__": "[\"zero\", {}]", 
+        "eps": "1.001e-05", 
+        "fix_gamma": "False", 
+        "use_global_stats": "False"
+      }, 
+      "inputs": []
+    }, 
+    {
+      "op": "null", 
+      "name": "bn4a_branch2a_moving_var", 
+      "attrs": {
+        "__init__": "[\"one\", {}]", 
+        "eps": "1.001e-05", 
+        "fix_gamma": "False", 
+        "use_global_stats": "False"
+      }, 
+      "inputs": []
+    }, 
+    {
+      "op": "BatchNorm", 
+      "name": "bn4a_branch2a", 
+      "attrs": {
+        "eps": "1.001e-05", 
+        "fix_gamma": "False", 
+        "use_global_stats": "False"
+      }, 
+      "inputs": [[121, 0, 0], [122, 0, 0], [123, 0, 0], [124, 0, 1], [125, 0, 1]]
+    }, 
+    {
+      "op": "Activation", 
+      "name": "res4a_branch2a_relu", 
+      "attrs": {"act_type": "relu"}, 
+      "inputs": [[126, 0, 0]]
+    }, 
+    {
+      "op": "null", 
+      "name": "gcn_middle_layer_1_k_1_weight", 
+      "inputs": []
+    }, 
+    {
+      "op": "null", 
+      "name": "gcn_middle_layer_1_k_1_bias", 
+      "attrs": {
+        "__lr_mult__": "2.", 
+        "__wd_mult__": "0."
+      }, 
+      "inputs": []
+    }, 
+    {
+      "op": "Convolution", 
+      "name": "gcn_middle_layer_1_k_1", 
+      "attrs": {
+        "dilate": "(1, 1)", 
+        "kernel": "(15, 1)", 
+        "no_bias": "False", 
+        "num_filter": "12", 
+        "num_group": "1", 
+        "pad": "(7, 0)", 
+        "stride": "(1, 1)", 
+        "workspace": "512"
+      }, 
+      "inputs": [[127, 0, 0], [128, 0, 0], [129, 0, 0]]
+    }, 
+    {
+      "op": "null", 
+      "name": "gcn_middle_layer_1_1_k_weight", 
+      "inputs": []
+    }, 
+    {
+      "op": "null", 
+      "name": "gcn_middle_layer_1_1_k_bias", 
+      "attrs": {
+        "__lr_mult__": "2.", 
+        "__wd_mult__": "0."
+      }, 
+      "inputs": []
+    }, 
+    {
+      "op": "Convolution", 
+      "name": "gcn_middle_layer_1_1_k", 
+      "attrs": {
+        "dilate": "(1, 1)", 
+        "kernel": "(1, 15)", 
+        "no_bias": "False", 
+        "num_filter": "12", 
+        "num_group": "1", 
+        "pad": "(0, 7)", 
+        "stride": "(1, 1)", 
+        "workspace": "512"
+      }, 
+      "inputs": [[130, 0, 0], [131, 0, 0], [132, 0, 0]]
+    }, 
+    {
+      "op": "null", 
+      "name": "gcn_middle_layer_2_1_k_weight", 
+      "inputs": []
+    }, 
+    {
+      "op": "null", 
+      "name": "gcn_middle_layer_2_1_k_bias", 
+      "attrs": {
+        "__lr_mult__": "2.", 
+        "__wd_mult__": "0."
+      }, 
+      "inputs": []
+    }, 
+    {
+      "op": "Convolution", 
+      "name": "gcn_middle_layer_2_1_k", 
+      "attrs": {
+        "dilate": "(1, 1)", 
+        "kernel": "(1, 15)", 
+        "no_bias": "False", 
+        "num_filter": "12", 
+        "num_group": "1", 
+        "pad": "(0, 7)", 
+        "stride": "(1, 1)", 
+        "workspace": "512"
+      }, 
+      "inputs": [[127, 0, 0], [134, 0, 0], [135, 0, 0]]
+    }, 
+    {
+      "op": "null", 
+      "name": "gcn_middle_layer_2_k_1_weight", 
+      "inputs": []
+    }, 
+    {
+      "op": "null", 
+      "name": "gcn_middle_layer_2_k_1_bias", 
+      "attrs": {
+        "__lr_mult__": "2.", 
+        "__wd_mult__": "0."
+      }, 
+      "inputs": []
+    }, 
+    {
+      "op": "Convolution", 
+      "name": "gcn_middle_layer_2_k_1", 
+      "attrs": {
+        "dilate": "(1, 1)", 
+        "kernel": "(15, 1)", 
+        "no_bias": "False", 
+        "num_filter": "12", 
+        "num_group": "1", 
+        "pad": "(7, 0)", 
+        "stride": "(1, 1)", 
+        "workspace": "512"
+      }, 
+      "inputs": [[136, 0, 0], [137, 0, 0], [138, 0, 0]]
+    }, 
+    {
+      "op": "elemwise_add", 
+      "name": "_plus17", 
+      "inputs": [[133, 0, 0], [139, 0, 0]]
+    }, 
+    {
+      "op": "null", 
+      "name": "res4a_branch1_weight", 
+      "inputs": []
+    }, 
+    {
+      "op": "Convolution", 
+      "name": "res4a_branch1", 
+      "attrs": {
+        "cudnn_off": "False", 
+        "dilate": "(1, 1)", 
+        "kernel": "(1, 1)", 
+        "no_bias": "True", 
+        "num_filter": "512", 
+        "num_group": "1", 
+        "pad": "(0, 0)", 
+        "stride": "(2, 2)", 
+        "workspace": "1024"
+      }, 
+      "inputs": [[127, 0, 0], [141, 0, 0]]
+    }, 
+    {
+      "op": "null", 
+      "name": "res4a_branch2a_weight", 
+      "inputs": []
+    }, 
+    {
+      "op": "Convolution", 
+      "name": "res4a_branch2a", 
+      "attrs": {
+        "cudnn_off": "False", 
+        "dilate": "(1, 1)", 
+        "kernel": "(3, 3)", 
+        "no_bias": "True", 
+        "num_filter": "512", 
+        "num_group": "1", 
+        "pad": "(1, 1)", 
+        "stride": "(2, 2)", 
+        "workspace": "1024"
+      }, 
+      "inputs": [[127, 0, 0], [143, 0, 0]]
+    }, 
+    {
+      "op": "null", 
+      "name": "bn4a_branch2b1_gamma", 
+      "inputs": []
+    }, 
+    {
+      "op": "null", 
+      "name": "bn4a_branch2b1_beta", 
+      "attrs": {
+        "__lr_mult__": "2.", 
+        "__wd_mult__": "0."
+      }, 
+      "inputs": []
+    }, 
+    {
+      "op": "null", 
+      "name": "bn4a_branch2b1_moving_mean", 
+      "attrs": {
+        "__init__": "[\"zero\", {}]", 
+        "eps": "1.001e-05", 
+        "fix_gamma": "False", 
+        "use_global_stats": "False"
+      }, 
+      "inputs": []
+    }, 
+    {
+      "op": "null", 
+      "name": "bn4a_branch2b1_moving_var", 
+      "attrs": {
+        "__init__": "[\"one\", {}]", 
+        "eps": "1.001e-05", 
+        "fix_gamma": "False", 
+        "use_global_stats": "False"
+      }, 
+      "inputs": []
+    }, 
+    {
+      "op": "BatchNorm", 
+      "name": "bn4a_branch2b1", 
+      "attrs": {
+        "eps": "1.001e-05", 
+        "fix_gamma": "False", 
+        "use_global_stats": "False"
+      }, 
+      "inputs": [[144, 0, 0], [145, 0, 0], [146, 0, 0], [147, 0, 1], [148, 0, 1]]
+    }, 
+    {
+      "op": "Activation", 
+      "name": "res4a_branch2b1_relu", 
+      "attrs": {"act_type": "relu"}, 
+      "inputs": [[149, 0, 0]]
+    }, 
+    {
+      "op": "null", 
+      "name": "res4a_branch2b1_weight", 
+      "inputs": []
+    }, 
+    {
+      "op": "Convolution", 
+      "name": "res4a_branch2b1", 
+      "attrs": {
+        "cudnn_off": "False", 
+        "dilate": "(1, 1)", 
+        "kernel": "(3, 3)", 
+        "no_bias": "True", 
+        "num_filter": "512", 
+        "num_group": "1", 
+        "pad": "(1, 1)", 
+        "stride": "(1, 1)", 
+        "workspace": "1024"
+      }, 
+      "inputs": [[150, 0, 0], [151, 0, 0]]
+    }, 
+    {
+      "op": "elemwise_add", 
+      "name": "_plus6", 
+      "inputs": [[142, 0, 0], [152, 0, 0]]
+    }, 
+    {
+      "op": "null", 
+      "name": "bn4b1_branch2a_gamma", 
+      "inputs": []
+    }, 
+    {
+      "op": "null", 
+      "name": "bn4b1_branch2a_beta", 
+      "attrs": {
+        "__lr_mult__": "2.", 
+        "__wd_mult__": "0."
+      }, 
+      "inputs": []
+    }, 
+    {
+      "op": "null", 
+      "name": "bn4b1_branch2a_moving_mean", 
+      "attrs": {
+        "__init__": "[\"zero\", {}]", 
+        "eps": "1.001e-05", 
+        "fix_gamma": "False", 
+        "use_global_stats": "False"
+      }, 
+      "inputs": []
+    }, 
+    {
+      "op": "null", 
+      "name": "bn4b1_branch2a_moving_var", 
+      "attrs": {
+        "__init__": "[\"one\", {}]", 
+        "eps": "1.001e-05", 
+        "fix_gamma": "False", 
+        "use_global_stats": "False"
+      }, 
+      "inputs": []
+    }, 
+    {
+      "op": "BatchNorm", 
+      "name": "bn4b1_branch2a", 
+      "attrs": {
+        "eps": "1.001e-05", 
+        "fix_gamma": "False", 
+        "use_global_stats": "False"
+      }, 
+      "inputs": [[153, 0, 0], [154, 0, 0], [155, 0, 0], [156, 0, 1], [157, 0, 1]]
+    }, 
+    {
+      "op": "Activation", 
+      "name": "res4b1_branch2a_relu", 
+      "attrs": {"act_type": "relu"}, 
+      "inputs": [[158, 0, 0]]
+    }, 
+    {
+      "op": "null", 
+      "name": "res4b1_branch2a_weight", 
+      "inputs": []
+    }, 
+    {
+      "op": "Convolution", 
+      "name": "res4b1_branch2a", 
+      "attrs": {
+        "cudnn_off": "False", 
+        "dilate": "(1, 1)", 
+        "kernel": "(3, 3)", 
+        "no_bias": "True", 
+        "num_filter": "512", 
+        "num_group": "1", 
+        "pad": "(1, 1)", 
+        "stride": "(1, 1)", 
+        "workspace": "1024"
+      }, 
+      "inputs": [[159, 0, 0], [160, 0, 0]]
+    }, 
+    {
+      "op": "null", 
+      "name": "bn4b1_branch2b1_gamma", 
+      "inputs": []
+    }, 
+    {
+      "op": "null", 
+      "name": "bn4b1_branch2b1_beta", 
+      "attrs": {
+        "__lr_mult__": "2.", 
+        "__wd_mult__": "0."
+      }, 
+      "inputs": []
+    }, 
+    {
+      "op": "null", 
+      "name": "bn4b1_branch2b1_moving_mean", 
+      "attrs": {
+        "__init__": "[\"zero\", {}]", 
+        "eps": "1.001e-05", 
+        "fix_gamma": "False", 
+        "use_global_stats": "False"
+      }, 
+      "inputs": []
+    }, 
+    {
+      "op": "null", 
+      "name": "bn4b1_branch2b1_moving_var", 
+      "attrs": {
+        "__init__": "[\"one\", {}]", 
+        "eps": "1.001e-05", 
+        "fix_gamma": "False", 
+        "use_global_stats": "False"
+      }, 
+      "inputs": []
+    }, 
+    {
+      "op": "BatchNorm", 
+      "name": "bn4b1_branch2b1", 
+      "attrs": {
+        "eps": "1.001e-05", 
+        "fix_gamma": "False", 
+        "use_global_stats": "False"
+      }, 
+      "inputs": [[161, 0, 0], [162, 0, 0], [163, 0, 0], [164, 0, 1], [165, 0, 1]]
+    }, 
+    {
+      "op": "Activation", 
+      "name": "res4b1_branch2b1_relu", 
+      "attrs": {"act_type": "relu"}, 
+      "inputs": [[166, 0, 0]]
+    }, 
+    {
+      "op": "null", 
+      "name": "res4b1_branch2b1_weight", 
+      "inputs": []
+    }, 
+    {
+      "op": "Convolution", 
+      "name": "res4b1_branch2b1", 
+      "attrs": {
+        "cudnn_off": "False", 
+        "dilate": "(1, 1)", 
+        "kernel": "(3, 3)", 
+        "no_bias": "True", 
+        "num_filter": "512", 
+        "num_group": "1", 
+        "pad": "(1, 1)", 
+        "stride": "(1, 1)", 
+        "workspace": "1024"
+      }, 
+      "inputs": [[167, 0, 0], [168, 0, 0]]
+    }, 
+    {
+      "op": "elemwise_add", 
+      "name": "_plus7", 
+      "inputs": [[153, 0, 0], [169, 0, 0]]
+    }, 
+    {
+      "op": "null", 
+      "name": "bn4b2_branch2a_gamma", 
+      "inputs": []
+    }, 
+    {
+      "op": "null", 
+      "name": "bn4b2_branch2a_beta", 
+      "attrs": {
+        "__lr_mult__": "2.", 
+        "__wd_mult__": "0."
+      }, 
+      "inputs": []
+    }, 
+    {
+      "op": "null", 
+      "name": "bn4b2_branch2a_moving_mean", 
+      "attrs": {
+        "__init__": "[\"zero\", {}]", 
+        "eps": "1.001e-05", 
+        "fix_gamma": "False", 
+        "use_global_stats": "False"
+      }, 
+      "inputs": []
+    }, 
+    {
+      "op": "null", 
+      "name": "bn4b2_branch2a_moving_var", 
+      "attrs": {
+        "__init__": "[\"one\", {}]", 
+        "eps": "1.001e-05", 
+        "fix_gamma": "False", 
+        "use_global_stats": "False"
+      }, 
+      "inputs": []
+    }, 
+    {
+      "op": "BatchNorm", 
+      "name": "bn4b2_branch2a", 
+      "attrs": {
+        "eps": "1.001e-05", 
+        "fix_gamma": "False", 
+        "use_global_stats": "False"
+      }, 
+      "inputs": [[170, 0, 0], [171, 0, 0], [172, 0, 0], [173, 0, 1], [174, 0, 1]]
+    }, 
+    {
+      "op": "Activation", 
+      "name": "res4b2_branch2a_relu", 
+      "attrs": {"act_type": "relu"}, 
+      "inputs": [[175, 0, 0]]
+    }, 
+    {
+      "op": "null", 
+      "name": "res4b2_branch2a_weight", 
+      "inputs": []
+    }, 
+    {
+      "op": "Convolution", 
+      "name": "res4b2_branch2a", 
+      "attrs": {
+        "cudnn_off": "False", 
+        "dilate": "(1, 1)", 
+        "kernel": "(3, 3)", 
+        "no_bias": "True", 
+        "num_filter": "512", 
+        "num_group": "1", 
+        "pad": "(1, 1)", 
+        "stride": "(1, 1)", 
+        "workspace": "1024"
+      }, 
+      "inputs": [[176, 0, 0], [177, 0, 0]]
+    }, 
+    {
+      "op": "null", 
+      "name": "bn4b2_branch2b1_gamma", 
+      "inputs": []
+    }, 
+    {
+      "op": "null", 
+      "name": "bn4b2_branch2b1_beta", 
+      "attrs": {
+        "__lr_mult__": "2.", 
+        "__wd_mult__": "0."
+      }, 
+      "inputs": []
+    }, 
+    {
+      "op": "null", 
+      "name": "bn4b2_branch2b1_moving_mean", 
+      "attrs": {
+        "__init__": "[\"zero\", {}]", 
+        "eps": "1.001e-05", 
+        "fix_gamma": "False", 
+        "use_global_stats": "False"
+      }, 
+      "inputs": []
+    }, 
+    {
+      "op": "null", 
+      "name": "bn4b2_branch2b1_moving_var", 
+      "attrs": {
+        "__init__": "[\"one\", {}]", 
+        "eps": "1.001e-05", 
+        "fix_gamma": "False", 
+        "use_global_stats": "False"
+      }, 
+      "inputs": []
+    }, 
+    {
+      "op": "BatchNorm", 
+      "name": "bn4b2_branch2b1", 
+      "attrs": {
+        "eps": "1.001e-05", 
+        "fix_gamma": "False", 
+        "use_global_stats": "False"
+      }, 
+      "inputs": [[178, 0, 0], [179, 0, 0], [180, 0, 0], [181, 0, 1], [182, 0, 1]]
+    }, 
+    {
+      "op": "Activation", 
+      "name": "res4b2_branch2b1_relu", 
+      "attrs": {"act_type": "relu"}, 
+      "inputs": [[183, 0, 0]]
+    }, 
+    {
+      "op": "null", 
+      "name": "res4b2_branch2b1_weight", 
+      "inputs": []
+    }, 
+    {
+      "op": "Convolution", 
+      "name": "res4b2_branch2b1", 
+      "attrs": {
+        "cudnn_off": "False", 
+        "dilate": "(1, 1)", 
+        "kernel": "(3, 3)", 
+        "no_bias": "True", 
+        "num_filter": "512", 
+        "num_group": "1", 
+        "pad": "(1, 1)", 
+        "stride": "(1, 1)", 
+        "workspace": "1024"
+      }, 
+      "inputs": [[184, 0, 0], [185, 0, 0]]
+    }, 
+    {
+      "op": "elemwise_add", 
+      "name": "_plus8", 
+      "inputs": [[170, 0, 0], [186, 0, 0]]
+    }, 
+    {
+      "op": "null", 
+      "name": "bn4b3_branch2a_gamma", 
+      "inputs": []
+    }, 
+    {
+      "op": "null", 
+      "name": "bn4b3_branch2a_beta", 
+      "attrs": {
+        "__lr_mult__": "2.", 
+        "__wd_mult__": "0."
+      }, 
+      "inputs": []
+    }, 
+    {
+      "op": "null", 
+      "name": "bn4b3_branch2a_moving_mean", 
+      "attrs": {
+        "__init__": "[\"zero\", {}]", 
+        "eps": "1.001e-05", 
+        "fix_gamma": "False", 
+        "use_global_stats": "False"
+      }, 
+      "inputs": []
+    }, 
+    {
+      "op": "null", 
+      "name": "bn4b3_branch2a_moving_var", 
+      "attrs": {
+        "__init__": "[\"one\", {}]", 
+        "eps": "1.001e-05", 
+        "fix_gamma": "False", 
+        "use_global_stats": "False"
+      }, 
+      "inputs": []
+    }, 
+    {
+      "op": "BatchNorm", 
+      "name": "bn4b3_branch2a", 
+      "attrs": {
+        "eps": "1.001e-05", 
+        "fix_gamma": "False", 
+        "use_global_stats": "False"
+      }, 
+      "inputs": [[187, 0, 0], [188, 0, 0], [189, 0, 0], [190, 0, 1], [191, 0, 1]]
+    }, 
+    {
+      "op": "Activation", 
+      "name": "res4b3_branch2a_relu", 
+      "attrs": {"act_type": "relu"}, 
+      "inputs": [[192, 0, 0]]
+    }, 
+    {
+      "op": "null", 
+      "name": "res4b3_branch2a_weight", 
+      "inputs": []
+    }, 
+    {
+      "op": "Convolution", 
+      "name": "res4b3_branch2a", 
+      "attrs": {
+        "cudnn_off": "False", 
+        "dilate": "(1, 1)", 
+        "kernel": "(3, 3)", 
+        "no_bias": "True", 
+        "num_filter": "512", 
+        "num_group": "1", 
+        "pad": "(1, 1)", 
+        "stride": "(1, 1)", 
+        "workspace": "1024"
+      }, 
+      "inputs": [[193, 0, 0], [194, 0, 0]]
+    }, 
+    {
+      "op": "null", 
+      "name": "bn4b3_branch2b1_gamma", 
+      "inputs": []
+    }, 
+    {
+      "op": "null", 
+      "name": "bn4b3_branch2b1_beta", 
+      "attrs": {
+        "__lr_mult__": "2.", 
+        "__wd_mult__": "0."
+      }, 
+      "inputs": []
+    }, 
+    {
+      "op": "null", 
+      "name": "bn4b3_branch2b1_moving_mean", 
+      "attrs": {
+        "__init__": "[\"zero\", {}]", 
+        "eps": "1.001e-05", 
+        "fix_gamma": "False", 
+        "use_global_stats": "False"
+      }, 
+      "inputs": []
+    }, 
+    {
+      "op": "null", 
+      "name": "bn4b3_branch2b1_moving_var", 
+      "attrs": {
+        "__init__": "[\"one\", {}]", 
+        "eps": "1.001e-05", 
+        "fix_gamma": "False", 
+        "use_global_stats": "False"
+      }, 
+      "inputs": []
+    }, 
+    {
+      "op": "BatchNorm", 
+      "name": "bn4b3_branch2b1", 
+      "attrs": {
+        "eps": "1.001e-05", 
+        "fix_gamma": "False", 
+        "use_global_stats": "False"
+      }, 
+      "inputs": [[195, 0, 0], [196, 0, 0], [197, 0, 0], [198, 0, 1], [199, 0, 1]]
+    }, 
+    {
+      "op": "Activation", 
+      "name": "res4b3_branch2b1_relu", 
+      "attrs": {"act_type": "relu"}, 
+      "inputs": [[200, 0, 0]]
+    }, 
+    {
+      "op": "null", 
+      "name": "res4b3_branch2b1_weight", 
+      "inputs": []
+    }, 
+    {
+      "op": "Convolution", 
+      "name": "res4b3_branch2b1", 
+      "attrs": {
+        "cudnn_off": "False", 
+        "dilate": "(1, 1)", 
+        "kernel": "(3, 3)", 
+        "no_bias": "True", 
+        "num_filter": "512", 
+        "num_group": "1", 
+        "pad": "(1, 1)", 
+        "stride": "(1, 1)", 
+        "workspace": "1024"
+      }, 
+      "inputs": [[201, 0, 0], [202, 0, 0]]
+    }, 
+    {
+      "op": "elemwise_add", 
+      "name": "_plus9", 
+      "inputs": [[187, 0, 0], [203, 0, 0]]
+    }, 
+    {
+      "op": "null", 
+      "name": "bn4b4_branch2a_gamma", 
+      "inputs": []
+    }, 
+    {
+      "op": "null", 
+      "name": "bn4b4_branch2a_beta", 
+      "attrs": {
+        "__lr_mult__": "2.", 
+        "__wd_mult__": "0."
+      }, 
+      "inputs": []
+    }, 
+    {
+      "op": "null", 
+      "name": "bn4b4_branch2a_moving_mean", 
+      "attrs": {
+        "__init__": "[\"zero\", {}]", 
+        "eps": "1.001e-05", 
+        "fix_gamma": "False", 
+        "use_global_stats": "False"
+      }, 
+      "inputs": []
+    }, 
+    {
+      "op": "null", 
+      "name": "bn4b4_branch2a_moving_var", 
+      "attrs": {
+        "__init__": "[\"one\", {}]", 
+        "eps": "1.001e-05", 
+        "fix_gamma": "False", 
+        "use_global_stats": "False"
+      }, 
+      "inputs": []
+    }, 
+    {
+      "op": "BatchNorm", 
+      "name": "bn4b4_branch2a", 
+      "attrs": {
+        "eps": "1.001e-05", 
+        "fix_gamma": "False", 
+        "use_global_stats": "False"
+      }, 
+      "inputs": [[204, 0, 0], [205, 0, 0], [206, 0, 0], [207, 0, 1], [208, 0, 1]]
+    }, 
+    {
+      "op": "Activation", 
+      "name": "res4b4_branch2a_relu", 
+      "attrs": {"act_type": "relu"}, 
+      "inputs": [[209, 0, 0]]
+    }, 
+    {
+      "op": "null", 
+      "name": "res4b4_branch2a_weight", 
+      "inputs": []
+    }, 
+    {
+      "op": "Convolution", 
+      "name": "res4b4_branch2a", 
+      "attrs": {
+        "cudnn_off": "False", 
+        "dilate": "(1, 1)", 
+        "kernel": "(3, 3)", 
+        "no_bias": "True", 
+        "num_filter": "512", 
+        "num_group": "1", 
+        "pad": "(1, 1)", 
+        "stride": "(1, 1)", 
+        "workspace": "1024"
+      }, 
+      "inputs": [[210, 0, 0], [211, 0, 0]]
+    }, 
+    {
+      "op": "null", 
+      "name": "bn4b4_branch2b1_gamma", 
+      "inputs": []
+    }, 
+    {
+      "op": "null", 
+      "name": "bn4b4_branch2b1_beta", 
+      "attrs": {
+        "__lr_mult__": "2.", 
+        "__wd_mult__": "0."
+      }, 
+      "inputs": []
+    }, 
+    {
+      "op": "null", 
+      "name": "bn4b4_branch2b1_moving_mean", 
+      "attrs": {
+        "__init__": "[\"zero\", {}]", 
+        "eps": "1.001e-05", 
+        "fix_gamma": "False", 
+        "use_global_stats": "False"
+      }, 
+      "inputs": []
+    }, 
+    {
+      "op": "null", 
+      "name": "bn4b4_branch2b1_moving_var", 
+      "attrs": {
+        "__init__": "[\"one\", {}]", 
+        "eps": "1.001e-05", 
+        "fix_gamma": "False", 
+        "use_global_stats": "False"
+      }, 
+      "inputs": []
+    }, 
+    {
+      "op": "BatchNorm", 
+      "name": "bn4b4_branch2b1", 
+      "attrs": {
+        "eps": "1.001e-05", 
+        "fix_gamma": "False", 
+        "use_global_stats": "False"
+      }, 
+      "inputs": [[212, 0, 0], [213, 0, 0], [214, 0, 0], [215, 0, 1], [216, 0, 1]]
+    }, 
+    {
+      "op": "Activation", 
+      "name": "res4b4_branch2b1_relu", 
+      "attrs": {"act_type": "relu"}, 
+      "inputs": [[217, 0, 0]]
+    }, 
+    {
+      "op": "null", 
+      "name": "res4b4_branch2b1_weight", 
+      "inputs": []
+    }, 
+    {
+      "op": "Convolution", 
+      "name": "res4b4_branch2b1", 
+      "attrs": {
+        "cudnn_off": "False", 
+        "dilate": "(1, 1)", 
+        "kernel": "(3, 3)", 
+        "no_bias": "True", 
+        "num_filter": "512", 
+        "num_group": "1", 
+        "pad": "(1, 1)", 
+        "stride": "(1, 1)", 
+        "workspace": "1024"
+      }, 
+      "inputs": [[218, 0, 0], [219, 0, 0]]
+    }, 
+    {
+      "op": "elemwise_add", 
+      "name": "_plus10", 
+      "inputs": [[204, 0, 0], [220, 0, 0]]
+    }, 
+    {
+      "op": "null", 
+      "name": "bn4b5_branch2a_gamma", 
+      "inputs": []
+    }, 
+    {
+      "op": "null", 
+      "name": "bn4b5_branch2a_beta", 
+      "attrs": {
+        "__lr_mult__": "2.", 
+        "__wd_mult__": "0."
+      }, 
+      "inputs": []
+    }, 
+    {
+      "op": "null", 
+      "name": "bn4b5_branch2a_moving_mean", 
+      "attrs": {
+        "__init__": "[\"zero\", {}]", 
+        "eps": "1.001e-05", 
+        "fix_gamma": "False", 
+        "use_global_stats": "False"
+      }, 
+      "inputs": []
+    }, 
+    {
+      "op": "null", 
+      "name": "bn4b5_branch2a_moving_var", 
+      "attrs": {
+        "__init__": "[\"one\", {}]", 
+        "eps": "1.001e-05", 
+        "fix_gamma": "False", 
+        "use_global_stats": "False"
+      }, 
+      "inputs": []
+    }, 
+    {
+      "op": "BatchNorm", 
+      "name": "bn4b5_branch2a", 
+      "attrs": {
+        "eps": "1.001e-05", 
+        "fix_gamma": "False", 
+        "use_global_stats": "False"
+      }, 
+      "inputs": [[221, 0, 0], [222, 0, 0], [223, 0, 0], [224, 0, 1], [225, 0, 1]]
+    }, 
+    {
+      "op": "Activation", 
+      "name": "res4b5_branch2a_relu", 
+      "attrs": {"act_type": "relu"}, 
+      "inputs": [[226, 0, 0]]
+    }, 
+    {
+      "op": "null", 
+      "name": "res4b5_branch2a_weight", 
+      "inputs": []
+    }, 
+    {
+      "op": "Convolution", 
+      "name": "res4b5_branch2a", 
+      "attrs": {
+        "cudnn_off": "False", 
+        "dilate": "(1, 1)", 
+        "kernel": "(3, 3)", 
+        "no_bias": "True", 
+        "num_filter": "512", 
+        "num_group": "1", 
+        "pad": "(1, 1)", 
+        "stride": "(1, 1)", 
+        "workspace": "1024"
+      }, 
+      "inputs": [[227, 0, 0], [228, 0, 0]]
+    }, 
+    {
+      "op": "null", 
+      "name": "bn4b5_branch2b1_gamma", 
+      "inputs": []
+    }, 
+    {
+      "op": "null", 
+      "name": "bn4b5_branch2b1_beta", 
+      "attrs": {
+        "__lr_mult__": "2.", 
+        "__wd_mult__": "0."
+      }, 
+      "inputs": []
+    }, 
+    {
+      "op": "null", 
+      "name": "bn4b5_branch2b1_moving_mean", 
+      "attrs": {
+        "__init__": "[\"zero\", {}]", 
+        "eps": "1.001e-05", 
+        "fix_gamma": "False", 
+        "use_global_stats": "False"
+      }, 
+      "inputs": []
+    }, 
+    {
+      "op": "null", 
+      "name": "bn4b5_branch2b1_moving_var", 
+      "attrs": {
+        "__init__": "[\"one\", {}]", 
+        "eps": "1.001e-05", 
+        "fix_gamma": "False", 
+        "use_global_stats": "False"
+      }, 
+      "inputs": []
+    }, 
+    {
+      "op": "BatchNorm", 
+      "name": "bn4b5_branch2b1", 
+      "attrs": {
+        "eps": "1.001e-05", 
+        "fix_gamma": "False", 
+        "use_global_stats": "False"
+      }, 
+      "inputs": [[229, 0, 0], [230, 0, 0], [231, 0, 0], [232, 0, 1], [233, 0, 1]]
+    }, 
+    {
+      "op": "Activation", 
+      "name": "res4b5_branch2b1_relu", 
+      "attrs": {"act_type": "relu"}, 
+      "inputs": [[234, 0, 0]]
+    }, 
+    {
+      "op": "null", 
+      "name": "res4b5_branch2b1_weight", 
+      "inputs": []
+    }, 
+    {
+      "op": "Convolution", 
+      "name": "res4b5_branch2b1", 
+      "attrs": {
+        "cudnn_off": "False", 
+        "dilate": "(1, 1)", 
+        "kernel": "(3, 3)", 
+        "no_bias": "True", 
+        "num_filter": "512", 
+        "num_group": "1", 
+        "pad": "(1, 1)", 
+        "stride": "(1, 1)", 
+        "workspace": "1024"
+      }, 
+      "inputs": [[235, 0, 0], [236, 0, 0]]
+    }, 
+    {
+      "op": "elemwise_add", 
+      "name": "_plus11", 
+      "inputs": [[221, 0, 0], [237, 0, 0]]
+    }, 
+    {
+      "op": "null", 
+      "name": "bn5a_branch2a_gamma", 
+      "inputs": []
+    }, 
+    {
+      "op": "null", 
+      "name": "bn5a_branch2a_beta", 
+      "attrs": {
+        "__lr_mult__": "2.", 
+        "__wd_mult__": "0."
+      }, 
+      "inputs": []
+    }, 
+    {
+      "op": "null", 
+      "name": "bn5a_branch2a_moving_mean", 
+      "attrs": {
+        "__init__": "[\"zero\", {}]", 
+        "eps": "1.001e-05", 
+        "fix_gamma": "False", 
+        "use_global_stats": "False"
+      }, 
+      "inputs": []
+    }, 
+    {
+      "op": "null", 
+      "name": "bn5a_branch2a_moving_var", 
+      "attrs": {
+        "__init__": "[\"one\", {}]", 
+        "eps": "1.001e-05", 
+        "fix_gamma": "False", 
+        "use_global_stats": "False"
+      }, 
+      "inputs": []
+    }, 
+    {
+      "op": "BatchNorm", 
+      "name": "bn5a_branch2a", 
+      "attrs": {
+        "eps": "1.001e-05", 
+        "fix_gamma": "False", 
+        "use_global_stats": "False"
+      }, 
+      "inputs": [[238, 0, 0], [239, 0, 0], [240, 0, 0], [241, 0, 1], [242, 0, 1]]
+    }, 
+    {
+      "op": "Activation", 
+      "name": "res5a_branch2a_relu", 
+      "attrs": {"act_type": "relu"}, 
+      "inputs": [[243, 0, 0]]
+    }, 
+    {
+      "op": "null", 
+      "name": "res5a_branch1_weight", 
+      "inputs": []
+    }, 
+    {
+      "op": "Convolution", 
+      "name": "res5a_branch1", 
+      "attrs": {
+        "cudnn_off": "False", 
+        "dilate": "(1, 1)", 
+        "kernel": "(1, 1)", 
+        "no_bias": "True", 
+        "num_filter": "1024", 
+        "num_group": "1", 
+        "pad": "(0, 0)", 
+        "stride": "(1, 1)", 
+        "workspace": "1024"
+      }, 
+      "inputs": [[244, 0, 0], [245, 0, 0]]
+    }, 
+    {
+      "op": "null", 
+      "name": "res5a_branch2a_weight", 
+      "inputs": []
+    }, 
+    {
+      "op": "Convolution", 
+      "name": "res5a_branch2a", 
+      "attrs": {
+        "cudnn_off": "False", 
+        "dilate": "(1, 1)", 
+        "kernel": "(3, 3)", 
+        "no_bias": "True", 
+        "num_filter": "512", 
+        "num_group": "1", 
+        "pad": "(1, 1)", 
+        "stride": "(1, 1)", 
+        "workspace": "1024"
+      }, 
+      "inputs": [[244, 0, 0], [247, 0, 0]]
+    }, 
+    {
+      "op": "null", 
+      "name": "bn5a_branch2b1_gamma", 
+      "inputs": []
+    }, 
+    {
+      "op": "null", 
+      "name": "bn5a_branch2b1_beta", 
+      "attrs": {
+        "__lr_mult__": "2.", 
+        "__wd_mult__": "0."
+      }, 
+      "inputs": []
+    }, 
+    {
+      "op": "null", 
+      "name": "bn5a_branch2b1_moving_mean", 
+      "attrs": {
+        "__init__": "[\"zero\", {}]", 
+        "eps": "1.001e-05", 
+        "fix_gamma": "False", 
+        "use_global_stats": "False"
+      }, 
+      "inputs": []
+    }, 
+    {
+      "op": "null", 
+      "name": "bn5a_branch2b1_moving_var", 
+      "attrs": {
+        "__init__": "[\"one\", {}]", 
+        "eps": "1.001e-05", 
+        "fix_gamma": "False", 
+        "use_global_stats": "False"
+      }, 
+      "inputs": []
+    }, 
+    {
+      "op": "BatchNorm", 
+      "name": "bn5a_branch2b1", 
+      "attrs": {
+        "eps": "1.001e-05", 
+        "fix_gamma": "False", 
+        "use_global_stats": "False"
+      }, 
+      "inputs": [[248, 0, 0], [249, 0, 0], [250, 0, 0], [251, 0, 1], [252, 0, 1]]
+    }, 
+    {
+      "op": "Activation", 
+      "name": "res5a_branch2b1_relu", 
+      "attrs": {"act_type": "relu"}, 
+      "inputs": [[253, 0, 0]]
+    }, 
+    {
+      "op": "null", 
+      "name": "res5a_branch2b1_weight", 
+      "inputs": []
+    }, 
+    {
+      "op": "Convolution", 
+      "name": "res5a_branch2b1", 
+      "attrs": {
+        "cudnn_off": "True", 
+        "dilate": "(2, 2)", 
+        "kernel": "(3, 3)", 
+        "no_bias": "True", 
+        "num_filter": "1024", 
+        "num_group": "1", 
+        "pad": "(2, 2)", 
+        "stride": "(1, 1)", 
+        "workspace": "1024"
+      }, 
+      "inputs": [[254, 0, 0], [255, 0, 0]]
+    }, 
+    {
+      "op": "elemwise_add", 
+      "name": "_plus12", 
+      "inputs": [[246, 0, 0], [256, 0, 0]]
+    }, 
+    {
+      "op": "null", 
+      "name": "bn5b1_branch2a_gamma", 
+      "inputs": []
+    }, 
+    {
+      "op": "null", 
+      "name": "bn5b1_branch2a_beta", 
+      "attrs": {
+        "__lr_mult__": "2.", 
+        "__wd_mult__": "0."
+      }, 
+      "inputs": []
+    }, 
+    {
+      "op": "null", 
+      "name": "bn5b1_branch2a_moving_mean", 
+      "attrs": {
+        "__init__": "[\"zero\", {}]", 
+        "eps": "1.001e-05", 
+        "fix_gamma": "False", 
+        "use_global_stats": "False"
+      }, 
+      "inputs": []
+    }, 
+    {
+      "op": "null", 
+      "name": "bn5b1_branch2a_moving_var", 
+      "attrs": {
+        "__init__": "[\"one\", {}]", 
+        "eps": "1.001e-05", 
+        "fix_gamma": "False", 
+        "use_global_stats": "False"
+      }, 
+      "inputs": []
+    }, 
+    {
+      "op": "BatchNorm", 
+      "name": "bn5b1_branch2a", 
+      "attrs": {
+        "eps": "1.001e-05", 
+        "fix_gamma": "False", 
+        "use_global_stats": "False"
+      }, 
+      "inputs": [[257, 0, 0], [258, 0, 0], [259, 0, 0], [260, 0, 1], [261, 0, 1]]
+    }, 
+    {
+      "op": "Activation", 
+      "name": "res5b1_branch2a_relu", 
+      "attrs": {"act_type": "relu"}, 
+      "inputs": [[262, 0, 0]]
+    }, 
+    {
+      "op": "null", 
+      "name": "res5b1_branch2a_weight", 
+      "inputs": []
+    }, 
+    {
+      "op": "Convolution", 
+      "name": "res5b1_branch2a", 
+      "attrs": {
+        "cudnn_off": "True", 
+        "dilate": "(2, 2)", 
+        "kernel": "(3, 3)", 
+        "no_bias": "True", 
+        "num_filter": "512", 
+        "num_group": "1", 
+        "pad": "(2, 2)", 
+        "stride": "(1, 1)", 
+        "workspace": "1024"
+      }, 
+      "inputs": [[263, 0, 0], [264, 0, 0]]
+    }, 
+    {
+      "op": "null", 
+      "name": "bn5b1_branch2b1_gamma", 
+      "inputs": []
+    }, 
+    {
+      "op": "null", 
+      "name": "bn5b1_branch2b1_beta", 
+      "attrs": {
+        "__lr_mult__": "2.", 
+        "__wd_mult__": "0."
+      }, 
+      "inputs": []
+    }, 
+    {
+      "op": "null", 
+      "name": "bn5b1_branch2b1_moving_mean", 
+      "attrs": {
+        "__init__": "[\"zero\", {}]", 
+        "eps": "1.001e-05", 
+        "fix_gamma": "False", 
+        "use_global_stats": "False"
+      }, 
+      "inputs": []
+    }, 
+    {
+      "op": "null", 
+      "name": "bn5b1_branch2b1_moving_var", 
+      "attrs": {
+        "__init__": "[\"one\", {}]", 
+        "eps": "1.001e-05", 
+        "fix_gamma": "False", 
+        "use_global_stats": "False"
+      }, 
+      "inputs": []
+    }, 
+    {
+      "op": "BatchNorm", 
+      "name": "bn5b1_branch2b1", 
+      "attrs": {
+        "eps": "1.001e-05", 
+        "fix_gamma": "False", 
+        "use_global_stats": "False"
+      }, 
+      "inputs": [[265, 0, 0], [266, 0, 0], [267, 0, 0], [268, 0, 1], [269, 0, 1]]
+    }, 
+    {
+      "op": "Activation", 
+      "name": "res5b1_branch2b1_relu", 
+      "attrs": {"act_type": "relu"}, 
+      "inputs": [[270, 0, 0]]
+    }, 
+    {
+      "op": "null", 
+      "name": "res5b1_branch2b1_weight", 
+      "inputs": []
+    }, 
+    {
+      "op": "Convolution", 
+      "name": "res5b1_branch2b1", 
+      "attrs": {
+        "cudnn_off": "True", 
+        "dilate": "(2, 2)", 
+        "kernel": "(3, 3)", 
+        "no_bias": "True", 
+        "num_filter": "1024", 
+        "num_group": "1", 
+        "pad": "(2, 2)", 
+        "stride": "(1, 1)", 
+        "workspace": "1024"
+      }, 
+      "inputs": [[271, 0, 0], [272, 0, 0]]
+    }, 
+    {
+      "op": "elemwise_add", 
+      "name": "_plus13", 
+      "inputs": [[257, 0, 0], [273, 0, 0]]
+    }, 
+    {
+      "op": "null", 
+      "name": "bn5b2_branch2a_gamma", 
+      "inputs": []
+    }, 
+    {
+      "op": "null", 
+      "name": "bn5b2_branch2a_beta", 
+      "attrs": {
+        "__lr_mult__": "2.", 
+        "__wd_mult__": "0."
+      }, 
+      "inputs": []
+    }, 
+    {
+      "op": "null", 
+      "name": "bn5b2_branch2a_moving_mean", 
+      "attrs": {
+        "__init__": "[\"zero\", {}]", 
+        "eps": "1.001e-05", 
+        "fix_gamma": "False", 
+        "use_global_stats": "False"
+      }, 
+      "inputs": []
+    }, 
+    {
+      "op": "null", 
+      "name": "bn5b2_branch2a_moving_var", 
+      "attrs": {
+        "__init__": "[\"one\", {}]", 
+        "eps": "1.001e-05", 
+        "fix_gamma": "False", 
+        "use_global_stats": "False"
+      }, 
+      "inputs": []
+    }, 
+    {
+      "op": "BatchNorm", 
+      "name": "bn5b2_branch2a", 
+      "attrs": {
+        "eps": "1.001e-05", 
+        "fix_gamma": "False", 
+        "use_global_stats": "False"
+      }, 
+      "inputs": [[274, 0, 0], [275, 0, 0], [276, 0, 0], [277, 0, 1], [278, 0, 1]]
+    }, 
+    {
+      "op": "Activation", 
+      "name": "res5b2_branch2a_relu", 
+      "attrs": {"act_type": "relu"}, 
+      "inputs": [[279, 0, 0]]
+    }, 
+    {
+      "op": "null", 
+      "name": "res5b2_branch2a_weight", 
+      "inputs": []
+    }, 
+    {
+      "op": "Convolution", 
+      "name": "res5b2_branch2a", 
+      "attrs": {
+        "cudnn_off": "True", 
+        "dilate": "(2, 2)", 
+        "kernel": "(3, 3)", 
+        "no_bias": "True", 
+        "num_filter": "512", 
+        "num_group": "1", 
+        "pad": "(2, 2)", 
+        "stride": "(1, 1)", 
+        "workspace": "1024"
+      }, 
+      "inputs": [[280, 0, 0], [281, 0, 0]]
+    }, 
+    {
+      "op": "null", 
+      "name": "bn5b2_branch2b1_gamma", 
+      "inputs": []
+    }, 
+    {
+      "op": "null", 
+      "name": "bn5b2_branch2b1_beta", 
+      "attrs": {
+        "__lr_mult__": "2.", 
+        "__wd_mult__": "0."
+      }, 
+      "inputs": []
+    }, 
+    {
+      "op": "null", 
+      "name": "bn5b2_branch2b1_moving_mean", 
+      "attrs": {
+        "__init__": "[\"zero\", {}]", 
+        "eps": "1.001e-05", 
+        "fix_gamma": "False", 
+        "use_global_stats": "False"
+      }, 
+      "inputs": []
+    }, 
+    {
+      "op": "null", 
+      "name": "bn5b2_branch2b1_moving_var", 
+      "attrs": {
+        "__init__": "[\"one\", {}]", 
+        "eps": "1.001e-05", 
+        "fix_gamma": "False", 
+        "use_global_stats": "False"
+      }, 
+      "inputs": []
+    }, 
+    {
+      "op": "BatchNorm", 
+      "name": "bn5b2_branch2b1", 
+      "attrs": {
+        "eps": "1.001e-05", 
+        "fix_gamma": "False", 
+        "use_global_stats": "False"
+      }, 
+      "inputs": [[282, 0, 0], [283, 0, 0], [284, 0, 0], [285, 0, 1], [286, 0, 1]]
+    }, 
+    {
+      "op": "Activation", 
+      "name": "res5b2_branch2b1_relu", 
+      "attrs": {"act_type": "relu"}, 
+      "inputs": [[287, 0, 0]]
+    }, 
+    {
+      "op": "null", 
+      "name": "res5b2_branch2b1_weight", 
+      "inputs": []
+    }, 
+    {
+      "op": "Convolution", 
+      "name": "res5b2_branch2b1", 
+      "attrs": {
+        "cudnn_off": "True", 
+        "dilate": "(2, 2)", 
+        "kernel": "(3, 3)", 
+        "no_bias": "True", 
+        "num_filter": "1024", 
+        "num_group": "1", 
+        "pad": "(2, 2)", 
+        "stride": "(1, 1)", 
+        "workspace": "1024"
+      }, 
+      "inputs": [[288, 0, 0], [289, 0, 0]]
+    }, 
+    {
+      "op": "elemwise_add", 
+      "name": "_plus14", 
+      "inputs": [[274, 0, 0], [290, 0, 0]]
+    }, 
+    {
+      "op": "null", 
+      "name": "bn6a_branch2a_gamma", 
+      "inputs": []
+    }, 
+    {
+      "op": "null", 
+      "name": "bn6a_branch2a_beta", 
+      "attrs": {
+        "__lr_mult__": "2.", 
+        "__wd_mult__": "0."
+      }, 
+      "inputs": []
+    }, 
+    {
+      "op": "null", 
+      "name": "bn6a_branch2a_moving_mean", 
+      "attrs": {
+        "__init__": "[\"zero\", {}]", 
+        "eps": "1.001e-05", 
+        "fix_gamma": "False", 
+        "use_global_stats": "False"
+      }, 
+      "inputs": []
+    }, 
+    {
+      "op": "null", 
+      "name": "bn6a_branch2a_moving_var", 
+      "attrs": {
+        "__init__": "[\"one\", {}]", 
+        "eps": "1.001e-05", 
+        "fix_gamma": "False", 
+        "use_global_stats": "False"
+      }, 
+      "inputs": []
+    }, 
+    {
+      "op": "BatchNorm", 
+      "name": "bn6a_branch2a", 
+      "attrs": {
+        "eps": "1.001e-05", 
+        "fix_gamma": "False", 
+        "use_global_stats": "False"
+      }, 
+      "inputs": [[291, 0, 0], [292, 0, 0], [293, 0, 0], [294, 0, 1], [295, 0, 1]]
+    }, 
+    {
+      "op": "Activation", 
+      "name": "res6a_branch2a_relu", 
+      "attrs": {"act_type": "relu"}, 
+      "inputs": [[296, 0, 0]]
+    }, 
+    {
+      "op": "null", 
+      "name": "res6a_branch1_weight", 
+      "inputs": []
+    }, 
+    {
+      "op": "Convolution", 
+      "name": "res6a_branch1", 
+      "attrs": {
+        "cudnn_off": "True", 
+        "dilate": "(1, 1)", 
+        "kernel": "(1, 1)", 
+        "no_bias": "True", 
+        "num_filter": "2048", 
+        "num_group": "1", 
+        "pad": "(0, 0)", 
+        "stride": "(1, 1)", 
+        "workspace": "1024"
+      }, 
+      "inputs": [[297, 0, 0], [298, 0, 0]]
+    }, 
+    {
+      "op": "null", 
+      "name": "res6a_branch2a_weight", 
+      "inputs": []
+    }, 
+    {
+      "op": "Convolution", 
+      "name": "res6a_branch2a", 
+      "attrs": {
+        "cudnn_off": "True", 
+        "dilate": "(1, 1)", 
+        "kernel": "(1, 1)", 
+        "no_bias": "True", 
+        "num_filter": "512", 
+        "num_group": "1", 
+        "pad": "(0, 0)", 
+        "stride": "(1, 1)", 
+        "workspace": "1024"
+      }, 
+      "inputs": [[297, 0, 0], [300, 0, 0]]
+    }, 
+    {
+      "op": "null", 
+      "name": "bn6a_branch2b1_gamma", 
+      "inputs": []
+    }, 
+    {
+      "op": "null", 
+      "name": "bn6a_branch2b1_beta", 
+      "attrs": {
+        "__lr_mult__": "2.", 
+        "__wd_mult__": "0."
+      }, 
+      "inputs": []
+    }, 
+    {
+      "op": "null", 
+      "name": "bn6a_branch2b1_moving_mean", 
+      "attrs": {
+        "__init__": "[\"zero\", {}]", 
+        "eps": "1.001e-05", 
+        "fix_gamma": "False", 
+        "use_global_stats": "False"
+      }, 
+      "inputs": []
+    }, 
+    {
+      "op": "null", 
+      "name": "bn6a_branch2b1_moving_var", 
+      "attrs": {
+        "__init__": "[\"one\", {}]", 
+        "eps": "1.001e-05", 
+        "fix_gamma": "False", 
+        "use_global_stats": "False"
+      }, 
+      "inputs": []
+    }, 
+    {
+      "op": "BatchNorm", 
+      "name": "bn6a_branch2b1", 
+      "attrs": {
+        "eps": "1.001e-05", 
+        "fix_gamma": "False", 
+        "use_global_stats": "False"
+      }, 
+      "inputs": [[301, 0, 0], [302, 0, 0], [303, 0, 0], [304, 0, 1], [305, 0, 1]]
+    }, 
+    {
+      "op": "Activation", 
+      "name": "res6a_branch2b1_relu", 
+      "attrs": {"act_type": "relu"}, 
+      "inputs": [[306, 0, 0]]
+    }, 
+    {
+      "op": "null", 
+      "name": "res6a_branch2b1_weight", 
+      "inputs": []
+    }, 
+    {
+      "op": "Convolution", 
+      "name": "res6a_branch2b1", 
+      "attrs": {
+        "cudnn_off": "True", 
+        "dilate": "(4, 4)", 
+        "kernel": "(3, 3)", 
+        "no_bias": "True", 
+        "num_filter": "1024", 
+        "num_group": "1", 
+        "pad": "(4, 4)", 
+        "stride": "(1, 1)", 
+        "workspace": "1024"
+      }, 
+      "inputs": [[307, 0, 0], [308, 0, 0]]
+    }, 
+    {
+      "op": "null", 
+      "name": "bn6a_branch2b2_gamma", 
+      "inputs": []
+    }, 
+    {
+      "op": "null", 
+      "name": "bn6a_branch2b2_beta", 
+      "attrs": {
+        "__lr_mult__": "2.", 
+        "__wd_mult__": "0."
+      }, 
+      "inputs": []
+    }, 
+    {
+      "op": "null", 
+      "name": "bn6a_branch2b2_moving_mean", 
+      "attrs": {
+        "__init__": "[\"zero\", {}]", 
+        "eps": "1.001e-05", 
+        "fix_gamma": "False", 
+        "use_global_stats": "False"
+      }, 
+      "inputs": []
+    }, 
+    {
+      "op": "null", 
+      "name": "bn6a_branch2b2_moving_var", 
+      "attrs": {
+        "__init__": "[\"one\", {}]", 
+        "eps": "1.001e-05", 
+        "fix_gamma": "False", 
+        "use_global_stats": "False"
+      }, 
+      "inputs": []
+    }, 
+    {
+      "op": "BatchNorm", 
+      "name": "bn6a_branch2b2", 
+      "attrs": {
+        "eps": "1.001e-05", 
+        "fix_gamma": "False", 
+        "use_global_stats": "False"
+      }, 
+      "inputs": [[309, 0, 0], [310, 0, 0], [311, 0, 0], [312, 0, 1], [313, 0, 1]]
+    }, 
+    {
+      "op": "Activation", 
+      "name": "res6a_branch2b2_relu", 
+      "attrs": {"act_type": "relu"}, 
+      "inputs": [[314, 0, 0]]
+    }, 
+    {
+      "op": "Dropout", 
+      "name": "res6a_branch2b2_do", 
+      "attrs": {"p": "0.3"}, 
+      "inputs": [[315, 0, 0]]
+    }, 
+    {
+      "op": "null", 
+      "name": "res6a_branch2b2_weight", 
+      "inputs": []
+    }, 
+    {
+      "op": "Convolution", 
+      "name": "res6a_branch2b2", 
+      "attrs": {
+        "cudnn_off": "True", 
+        "dilate": "(1, 1)", 
+        "kernel": "(1, 1)", 
+        "no_bias": "True", 
+        "num_filter": "2048", 
+        "num_group": "1", 
+        "pad": "(0, 0)", 
+        "stride": "(1, 1)", 
+        "workspace": "1024"
+      }, 
+      "inputs": [[316, 0, 0], [317, 0, 0]]
+    }, 
+    {
+      "op": "elemwise_add", 
+      "name": "_plus15", 
+      "inputs": [[299, 0, 0], [318, 0, 0]]
+    }, 
+    {
+      "op": "null", 
+      "name": "bn7a_branch2a_gamma", 
+      "inputs": []
+    }, 
+    {
+      "op": "null", 
+      "name": "bn7a_branch2a_beta", 
+      "attrs": {
+        "__lr_mult__": "2.", 
+        "__wd_mult__": "0."
+      }, 
+      "inputs": []
+    }, 
+    {
+      "op": "null", 
+      "name": "bn7a_branch2a_moving_mean", 
+      "attrs": {
+        "__init__": "[\"zero\", {}]", 
+        "eps": "1.001e-05", 
+        "fix_gamma": "False", 
+        "use_global_stats": "False"
+      }, 
+      "inputs": []
+    }, 
+    {
+      "op": "null", 
+      "name": "bn7a_branch2a_moving_var", 
+      "attrs": {
+        "__init__": "[\"one\", {}]", 
+        "eps": "1.001e-05", 
+        "fix_gamma": "False", 
+        "use_global_stats": "False"
+      }, 
+      "inputs": []
+    }, 
+    {
+      "op": "BatchNorm", 
+      "name": "bn7a_branch2a", 
+      "attrs": {
+        "eps": "1.001e-05", 
+        "fix_gamma": "False", 
+        "use_global_stats": "False"
+      }, 
+      "inputs": [[319, 0, 0], [320, 0, 0], [321, 0, 0], [322, 0, 1], [323, 0, 1]]
+    }, 
+    {
+      "op": "Activation", 
+      "name": "res7a_branch2a_relu", 
+      "attrs": {"act_type": "relu"}, 
+      "inputs": [[324, 0, 0]]
+    }, 
+    {
+      "op": "null", 
+      "name": "res7a_branch1_weight", 
+      "inputs": []
+    }, 
+    {
+      "op": "Convolution", 
+      "name": "res7a_branch1", 
+      "attrs": {
+        "cudnn_off": "True", 
+        "dilate": "(1, 1)", 
+        "kernel": "(1, 1)", 
+        "no_bias": "True", 
+        "num_filter": "4096", 
+        "num_group": "1", 
+        "pad": "(0, 0)", 
+        "stride": "(1, 1)", 
+        "workspace": "1024"
+      }, 
+      "inputs": [[325, 0, 0], [326, 0, 0]]
+    }, 
+    {
+      "op": "null", 
+      "name": "res7a_branch2a_weight", 
+      "inputs": []
+    }, 
+    {
+      "op": "Convolution", 
+      "name": "res7a_branch2a", 
+      "attrs": {
+        "cudnn_off": "True", 
+        "dilate": "(1, 1)", 
+        "kernel": "(1, 1)", 
+        "no_bias": "True", 
+        "num_filter": "1024", 
+        "num_group": "1", 
+        "pad": "(0, 0)", 
+        "stride": "(1, 1)", 
+        "workspace": "1024"
+      }, 
+      "inputs": [[325, 0, 0], [328, 0, 0]]
+    }, 
+    {
+      "op": "null", 
+      "name": "bn7a_branch2b1_gamma", 
+      "inputs": []
+    }, 
+    {
+      "op": "null", 
+      "name": "bn7a_branch2b1_beta", 
+      "attrs": {
+        "__lr_mult__": "2.", 
+        "__wd_mult__": "0."
+      }, 
+      "inputs": []
+    }, 
+    {
+      "op": "null", 
+      "name": "bn7a_branch2b1_moving_mean", 
+      "attrs": {
+        "__init__": "[\"zero\", {}]", 
+        "eps": "1.001e-05", 
+        "fix_gamma": "False", 
+        "use_global_stats": "False"
+      }, 
+      "inputs": []
+    }, 
+    {
+      "op": "null", 
+      "name": "bn7a_branch2b1_moving_var", 
+      "attrs": {
+        "__init__": "[\"one\", {}]", 
+        "eps": "1.001e-05", 
+        "fix_gamma": "False", 
+        "use_global_stats": "False"
+      }, 
+      "inputs": []
+    }, 
+    {
+      "op": "BatchNorm", 
+      "name": "bn7a_branch2b1", 
+      "attrs": {
+        "eps": "1.001e-05", 
+        "fix_gamma": "False", 
+        "use_global_stats": "False"
+      }, 
+      "inputs": [[329, 0, 0], [330, 0, 0], [331, 0, 0], [332, 0, 1], [333, 0, 1]]
+    }, 
+    {
+      "op": "Activation", 
+      "name": "res7a_branch2b1_relu", 
+      "attrs": {"act_type": "relu"}, 
+      "inputs": [[334, 0, 0]]
+    }, 
+    {
+      "op": "null", 
+      "name": "res7a_branch2b1_weight", 
+      "inputs": []
+    }, 
+    {
+      "op": "Convolution", 
+      "name": "res7a_branch2b1", 
+      "attrs": {
+        "cudnn_off": "True", 
+        "dilate": "(4, 4)", 
+        "kernel": "(3, 3)", 
+        "no_bias": "True", 
+        "num_filter": "2048", 
+        "num_group": "1", 
+        "pad": "(4, 4)", 
+        "stride": "(1, 1)", 
+        "workspace": "1024"
+      }, 
+      "inputs": [[335, 0, 0], [336, 0, 0]]
+    }, 
+    {
+      "op": "null", 
+      "name": "bn7a_branch2b2_gamma", 
+      "inputs": []
+    }, 
+    {
+      "op": "null", 
+      "name": "bn7a_branch2b2_beta", 
+      "attrs": {
+        "__lr_mult__": "2.", 
+        "__wd_mult__": "0."
+      }, 
+      "inputs": []
+    }, 
+    {
+      "op": "null", 
+      "name": "bn7a_branch2b2_moving_mean", 
+      "attrs": {
+        "__init__": "[\"zero\", {}]", 
+        "eps": "1.001e-05", 
+        "fix_gamma": "False", 
+        "use_global_stats": "False"
+      }, 
+      "inputs": []
+    }, 
+    {
+      "op": "null", 
+      "name": "bn7a_branch2b2_moving_var", 
+      "attrs": {
+        "__init__": "[\"one\", {}]", 
+        "eps": "1.001e-05", 
+        "fix_gamma": "False", 
+        "use_global_stats": "False"
+      }, 
+      "inputs": []
+    }, 
+    {
+      "op": "BatchNorm", 
+      "name": "bn7a_branch2b2", 
+      "attrs": {
+        "eps": "1.001e-05", 
+        "fix_gamma": "False", 
+        "use_global_stats": "False"
+      }, 
+      "inputs": [[337, 0, 0], [338, 0, 0], [339, 0, 0], [340, 0, 1], [341, 0, 1]]
+    }, 
+    {
+      "op": "Activation", 
+      "name": "res7a_branch2b2_relu", 
+      "attrs": {"act_type": "relu"}, 
+      "inputs": [[342, 0, 0]]
+    }, 
+    {
+      "op": "Dropout", 
+      "name": "res7a_branch2b2_do", 
+      "attrs": {"p": "0.5"}, 
+      "inputs": [[343, 0, 0]]
+    }, 
+    {
+      "op": "null", 
+      "name": "res7a_branch2b2_weight", 
+      "inputs": []
+    }, 
+    {
+      "op": "Convolution", 
+      "name": "res7a_branch2b2", 
+      "attrs": {
+        "cudnn_off": "True", 
+        "dilate": "(1, 1)", 
+        "kernel": "(1, 1)", 
+        "no_bias": "True", 
+        "num_filter": "4096", 
+        "num_group": "1", 
+        "pad": "(0, 0)", 
+        "stride": "(1, 1)", 
+        "workspace": "1024"
+      }, 
+      "inputs": [[344, 0, 0], [345, 0, 0]]
+    }, 
+    {
+      "op": "elemwise_add", 
+      "name": "_plus16", 
+      "inputs": [[327, 0, 0], [346, 0, 0]]
+    }, 
+    {
+      "op": "null", 
+      "name": "bn7_gamma", 
+      "inputs": []
+    }, 
+    {
+      "op": "null", 
+      "name": "bn7_beta", 
+      "attrs": {
+        "__lr_mult__": "2.", 
+        "__wd_mult__": "0."
+      }, 
+      "inputs": []
+    }, 
+    {
+      "op": "null", 
+      "name": "bn7_moving_mean", 
+      "attrs": {
+        "__init__": "[\"zero\", {}]", 
+        "eps": "1.001e-05", 
+        "fix_gamma": "False", 
+        "use_global_stats": "False"
+      }, 
+      "inputs": []
+    }, 
+    {
+      "op": "null", 
+      "name": "bn7_moving_var", 
+      "attrs": {
+        "__init__": "[\"one\", {}]", 
+        "eps": "1.001e-05", 
+        "fix_gamma": "False", 
+        "use_global_stats": "False"
+      }, 
+      "inputs": []
+    }, 
+    {
+      "op": "BatchNorm", 
+      "name": "bn7", 
+      "attrs": {
+        "eps": "1.001e-05", 
+        "fix_gamma": "False", 
+        "use_global_stats": "False"
+      }, 
+      "inputs": [[347, 0, 0], [348, 0, 0], [349, 0, 0], [350, 0, 1], [351, 0, 1]]
+    }, 
+    {
+      "op": "Activation", 
+      "name": "relu7", 
+      "attrs": {"act_type": "relu"}, 
+      "inputs": [[352, 0, 0]]
+    }, 
+    {
+      "op": "null", 
+      "name": "conv6a_weight", 
+      "inputs": []
+    }, 
+    {
+      "op": "null", 
+      "name": "conv6a_bias", 
+      "attrs": {
+        "__lr_mult__": "2.", 
+        "__wd_mult__": "0."
+      }, 
+      "inputs": []
+    }, 
+    {
+      "op": "Convolution", 
+      "name": "conv6a", 
+      "attrs": {
+        "cudnn_off": "False", 
+        "dilate": "(12, 12)", 
+        "kernel": "(3, 3)", 
+        "no_bias": "False", 
+        "num_filter": "512", 
+        "num_group": "1", 
+        "pad": "(12, 12)", 
+        "stride": "(1, 1)", 
+        "workspace": "1024"
+      }, 
+      "inputs": [[353, 0, 0], [354, 0, 0], [355, 0, 0]]
+    }, 
+    {
+      "op": "Activation", 
+      "name": "conv6a_relu", 
+      "attrs": {"act_type": "relu"}, 
+      "inputs": [[356, 0, 0]]
+    }, 
+    {
+      "op": "null", 
+      "name": "linear12_weight", 
+      "inputs": []
+    }, 
+    {
+      "op": "null", 
+      "name": "linear12_bias", 
+      "attrs": {
+        "__lr_mult__": "2.", 
+        "__wd_mult__": "0."
+      }, 
+      "inputs": []
+    }, 
+    {
+      "op": "Convolution", 
+      "name": "linear12", 
+      "attrs": {
+        "cudnn_off": "True", 
+        "dilate": "(12, 12)", 
+        "kernel": "(3, 3)", 
+        "no_bias": "False", 
+        "num_filter": "12", 
+        "num_group": "1", 
+        "pad": "(12, 12)", 
+        "stride": "(1, 1)", 
+        "workspace": "1024"
+      }, 
+      "inputs": [[357, 0, 0], [358, 0, 0], [359, 0, 0]]
+    }, 
+    {
+      "op": "null", 
+      "name": "deconv_lowest_resolution_12_weight", 
+      "attrs": {
+        "__init__": "[\"bilinear\", {}]", 
+        "num_args": "1", 
+        "num_filter": "12", 
+        "sample_type": "bilinear", 
+        "scale": "2", 
+        "workspace": "1024"
+      }, 
+      "inputs": []
+    }, 
+    {
+      "op": "UpSampling", 
+      "name": "deconv_lowest_resolution_12", 
+      "attrs": {
+        "num_args": "1", 
+        "num_filter": "12", 
+        "sample_type": "bilinear", 
+        "scale": "2", 
+        "workspace": "1024"
+      }, 
+      "inputs": [[360, 0, 0], [361, 0, 0]]
+    }, 
+    {
+      "op": "elemwise_add", 
+      "name": "_plus18", 
+      "inputs": [[140, 0, 0], [362, 0, 0]]
+    }, 
+    {
+      "op": "null", 
+      "name": "deconv_second_resolution_12_weight", 
+      "attrs": {
+        "__init__": "[\"bilinear\", {}]", 
+        "num_args": "1", 
+        "num_filter": "12", 
+        "sample_type": "bilinear", 
+        "scale": "2", 
+        "workspace": "1024"
+      }, 
+      "inputs": []
+    }, 
+    {
+      "op": "UpSampling", 
+      "name": "deconv_second_resolution_12", 
+      "attrs": {
+        "num_args": "1", 
+        "num_filter": "12", 
+        "sample_type": "bilinear", 
+        "scale": "2", 
+        "workspace": "1024"
+      }, 
+      "inputs": [[363, 0, 0], [364, 0, 0]]
+    }, 
+    {
+      "op": "elemwise_add", 
+      "name": "_plus20", 
+      "inputs": [[74, 0, 0], [365, 0, 0]]
+    }, 
+    {
+      "op": "null", 
+      "name": "softmax_label", 
+      "attrs": {
+        "ignore_label": "255", 
+        "label_weight": "{\"1\": 1.0, \"0\": 1.0, \"3\": 1.0}", 
+        "margin": "-1", 
+        "min_kept": "256", 
+        "op_type": "weighted_ohem_softmax", 
+        "thresh": "0.6"
+      }, 
+      "inputs": []
+    }, 
+    {
+      "op": "Custom", 
+      "name": "softmax", 
+      "attrs": {
+        "ignore_label": "255", 
+        "label_weight": "{\"1\": 1.0, \"0\": 1.0, \"3\": 1.0}", 
+        "margin": "-1", 
+        "min_kept": "256", 
+        "op_type": "weighted_ohem_softmax", 
+        "thresh": "0.6"
+      }, 
+      "inputs": [[366, 0, 0], [367, 0, 0]]
+    }
+  ], 
+  "arg_nodes": [
+    0, 
+    1, 
+    3, 
+    4, 
+    5, 
+    6, 
+    9, 
+    11, 
+    13, 
+    14, 
+    15, 
+    16, 
+    19, 
+    22, 
+    23, 
+    24, 
+    25, 
+    28, 
+    30, 
+    31, 
+    32, 
+    33, 
+    36, 
+    39, 
+    40, 
+    41, 
+    42, 
+    45, 
+    47, 
+    48, 
+    49, 
+    50, 
+    53, 
+    56, 
+    57, 
+    58, 
+    59, 
+    62, 
+    63, 
+    65, 
+    66, 
+    68, 
+    69, 
+    71, 
+    72, 
+    75, 
+    77, 
+    79, 
+    80, 
+    81, 
+    82, 
+    85, 
+    88, 
+    89, 
+    90, 
+    91, 
+    94, 
+    96, 
+    97, 
+    98, 
+    99, 
+    102, 
+    105, 
+    106, 
+    107, 
+    108, 
+    111, 
+    113, 
+    114, 
+    115, 
+    116, 
+    119, 
+    122, 
+    123, 
+    124, 
+    125, 
+    128, 
+    129, 
+    131, 
+    132, 
+    134, 
+    135, 
+    137, 
+    138, 
+    141, 
+    143, 
+    145, 
+    146, 
+    147, 
+    148, 
+    151, 
+    154, 
+    155, 
+    156, 
+    157, 
+    160, 
+    162, 
+    163, 
+    164, 
+    165, 
+    168, 
+    171, 
+    172, 
+    173, 
+    174, 
+    177, 
+    179, 
+    180, 
+    181, 
+    182, 
+    185, 
+    188, 
+    189, 
+    190, 
+    191, 
+    194, 
+    196, 
+    197, 
+    198, 
+    199, 
+    202, 
+    205, 
+    206, 
+    207, 
+    208, 
+    211, 
+    213, 
+    214, 
+    215, 
+    216, 
+    219, 
+    222, 
+    223, 
+    224, 
+    225, 
+    228, 
+    230, 
+    231, 
+    232, 
+    233, 
+    236, 
+    239, 
+    240, 
+    241, 
+    242, 
+    245, 
+    247, 
+    249, 
+    250, 
+    251, 
+    252, 
+    255, 
+    258, 
+    259, 
+    260, 
+    261, 
+    264, 
+    266, 
+    267, 
+    268, 
+    269, 
+    272, 
+    275, 
+    276, 
+    277, 
+    278, 
+    281, 
+    283, 
+    284, 
+    285, 
+    286, 
+    289, 
+    292, 
+    293, 
+    294, 
+    295, 
+    298, 
+    300, 
+    302, 
+    303, 
+    304, 
+    305, 
+    308, 
+    310, 
+    311, 
+    312, 
+    313, 
+    317, 
+    320, 
+    321, 
+    322, 
+    323, 
+    326, 
+    328, 
+    330, 
+    331, 
+    332, 
+    333, 
+    336, 
+    338, 
+    339, 
+    340, 
+    341, 
+    345, 
+    348, 
+    349, 
+    350, 
+    351, 
+    354, 
+    355, 
+    358, 
+    359, 
+    361, 
+    364, 
+    367
+  ], 
+  "node_row_ptr": [
+    0, 
+    1, 
+    2, 
+    3, 
+    4, 
+    5, 
+    6, 
+    7, 
+    10, 
+    11, 
+    12, 
+    13, 
+    14, 
+    15, 
+    16, 
+    17, 
+    18, 
+    19, 
+    22, 
+    23, 
+    24, 
+    25, 
+    26, 
+    27, 
+    28, 
+    29, 
+    30, 
+    33, 
+    34, 
+    35, 
+    36, 
+    37, 
+    38, 
+    39, 
+    40, 
+    43, 
+    44, 
+    45, 
+    46, 
+    47, 
+    48, 
+    49, 
+    50, 
+    51, 
+    54, 
+    55, 
+    56, 
+    57, 
+    58, 
+    59, 
+    60, 
+    61, 
+    64, 
+    65, 
+    66, 
+    67, 
+    68, 
+    69, 
+    70, 
+    71, 
+    72, 
+    75, 
+    76, 
+    77, 
+    78, 
+    79, 
+    80, 
+    81, 
+    82, 
+    83, 
+    84, 
+    85, 
+    86, 
+    87, 
+    88, 
+    89, 
+    90, 
+    91, 
+    92, 
+    93, 
+    94, 
+    95, 
+    96, 
+    97, 
+    100, 
+    101, 
+    102, 
+    103, 
+    104, 
+    105, 
+    106, 
+    107, 
+    108, 
+    111, 
+    112, 
+    113, 
+    114, 
+    115, 
+    116, 
+    117, 
+    118, 
+    121, 
+    122, 
+    123, 
+    124, 
+    125, 
+    126, 
+    127, 
+    128, 
+    129, 
+    132, 
+    133, 
+    134, 
+    135, 
+    136, 
+    137, 
+    138, 
+    139, 
+    142, 
+    143, 
+    144, 
+    145, 
+    146, 
+    147, 
+    148, 
+    149, 
+    150, 
+    153, 
+    154, 
+    155, 
+    156, 
+    157, 
+    158, 
+    159, 
+    160, 
+    161, 
+    162, 
+    163, 
+    164, 
+    165, 
+    166, 
+    167, 
+    168, 
+    169, 
+    170, 
+    171, 
+    172, 
+    173, 
+    174, 
+    175, 
+    178, 
+    179, 
+    180, 
+    181, 
+    182, 
+    183, 
+    184, 
+    185, 
+    186, 
+    189, 
+    190, 
+    191, 
+    192, 
+    193, 
+    194, 
+    195, 
+    196, 
+    199, 
+    200, 
+    201, 
+    202, 
+    203, 
+    204, 
+    205, 
+    206, 
+    207, 
+    210, 
+    211, 
+    212, 
+    213, 
+    214, 
+    215, 
+    216, 
+    217, 
+    220, 
+    221, 
+    222, 
+    223, 
+    224, 
+    225, 
+    226, 
+    227, 
+    228, 
+    231, 
+    232, 
+    233, 
+    234, 
+    235, 
+    236, 
+    237, 
+    238, 
+    241, 
+    242, 
+    243, 
+    244, 
+    245, 
+    246, 
+    247, 
+    248, 
+    249, 
+    252, 
+    253, 
+    254, 
+    255, 
+    256, 
+    257, 
+    258, 
+    259, 
+    262, 
+    263, 
+    264, 
+    265, 
+    266, 
+    267, 
+    268, 
+    269, 
+    270, 
+    273, 
+    274, 
+    275, 
+    276, 
+    277, 
+    278, 
+    279, 
+    280, 
+    283, 
+    284, 
+    285, 
+    286, 
+    287, 
+    288, 
+    289, 
+    290, 
+    291, 
+    294, 
+    295, 
+    296, 
+    297, 
+    298, 
+    299, 
+    300, 
+    301, 
+    302, 
+    303, 
+    306, 
+    307, 
+    308, 
+    309, 
+    310, 
+    311, 
+    312, 
+    313, 
+    314, 
+    317, 
+    318, 
+    319, 
+    320, 
+    321, 
+    322, 
+    323, 
+    324, 
+    327, 
+    328, 
+    329, 
+    330, 
+    331, 
+    332, 
+    333, 
+    334, 
+    335, 
+    338, 
+    339, 
+    340, 
+    341, 
+    342, 
+    343, 
+    344, 
+    345, 
+    348, 
+    349, 
+    350, 
+    351, 
+    352, 
+    353, 
+    354, 
+    355, 
+    356, 
+    359, 
+    360, 
+    361, 
+    362, 
+    363, 
+    364, 
+    365, 
+    366, 
+    367, 
+    368, 
+    371, 
+    372, 
+    373, 
+    374, 
+    375, 
+    376, 
+    377, 
+    378, 
+    381, 
+    382, 
+    384, 
+    385, 
+    386, 
+    387, 
+    388, 
+    389, 
+    390, 
+    391, 
+    394, 
+    395, 
+    396, 
+    397, 
+    398, 
+    399, 
+    400, 
+    401, 
+    402, 
+    403, 
+    406, 
+    407, 
+    408, 
+    409, 
+    410, 
+    411, 
+    412, 
+    413, 
+    416, 
+    417, 
+    419, 
+    420, 
+    421, 
+    422, 
+    423, 
+    424, 
+    425, 
+    426, 
+    429, 
+    430, 
+    431, 
+    432, 
+    433, 
+    434, 
+    435, 
+    436, 
+    437, 
+    438, 
+    439, 
+    440, 
+    441, 
+    442, 
+    443, 
+    444, 
+    445
+  ], 
+  "heads": [[368, 0, 0]], 
+  "attrs": {"mxnet_version": ["int", 10000]}
+}
