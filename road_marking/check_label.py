@@ -28,7 +28,7 @@ class CheckLabelHandler(tornado.web.RequestHandler):
         self.file_list = list()
         self.pixel = 50
 
-        self.src_dir = "/data/deeplearning/dataset/training/data/test"
+        self.src_dir = "/data/deeplearning/dataset/training/data/released_temp"
         self.temp_dir = "/data/deeplearning/dataset/training/data/check_temp"
 
         if os.path.exists(self.temp_dir):

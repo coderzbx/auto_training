@@ -42,7 +42,7 @@ class CheckData(object):
         model_file_name = "kddata_decoder2_cls12_s2_ep-0140.params"
         self.weights_file = os.path.join(cur_dir, model_file_name)
 
-        self.temp_dir = "/data/deeplearning/dataset/training/data/test"
+        self.temp_dir = "/data/deeplearning/dataset/training/data/released_temp"
         self.data_dir = "/data/deeplearning/dataset/training/data/check"
         if not os.path.exists(self.data_dir):
             os.makedirs(self.data_dir)
