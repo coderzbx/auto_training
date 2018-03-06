@@ -56,6 +56,9 @@ class CheckLabelHandler(tornado.web.RequestHandler):
         # }
 
         try:
+            _ver = self.get_argument("version", "all")
+            self.src_dir = os.path.join(self.src_dir, _ver)
+
             if not os.path.exists(self.src_dir):
                 task_count = 0
                 err_code = 1
@@ -66,6 +69,8 @@ class CheckLabelHandler(tornado.web.RequestHandler):
                     # clean this directory
                     tmp_dirs = os.listdir(self.temp_dir)
                     for tmp_dir in tmp_dirs:
+                        if not tmp_dir.isdigit():
+                            continue
                         tmp_path = os.path.join(self.temp_dir, tmp_dir)
                         if os.path.isfile(tmp_path):
                             os.remove(tmp_path)

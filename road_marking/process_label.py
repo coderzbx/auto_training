@@ -91,16 +91,22 @@ class ProcessLabelHandler(tornado.web.RequestHandler):
         # }
 
         try:
+            _ver = self.get_argument("version", "all")
+            self.src_dir = os.path.join(self.src_dir, _ver)
+            self.temp_dir = os.path.join(self.temp_dir, _ver)
+
             if not os.path.exists(self.src_dir):
                 task_count = 0
                 err_code = 1
             else:
                 if not os.path.exists(self.temp_dir):
-                    os.mkdir(self.temp_dir)
+                    os.makedirs(self.temp_dir)
                 else:
                     # clean this directory
                     tmp_dirs = os.listdir(self.temp_dir)
                     for tmp_dir in tmp_dirs:
+                        if not tmp_dir.isdigit():
+                            continue
                         tmp_path = os.path.join(self.temp_dir, tmp_dir)
                         if os.path.isfile(tmp_path):
                             os.remove(tmp_path)
@@ -187,9 +193,22 @@ class ProcessLabelHandler(tornado.web.RequestHandler):
                     process.join()
                     self.logger.info(str(process.pid) + ", join")
 
+                # 先拷贝到all目录下
+                if _ver != "all":
+                    temp_dir_list = os.listdir(self.temp_dir)
+                    for temp_dir in temp_dir_list:
+                        if not temp_dir.isdigit():
+                            continue
+                        src_temp = os.path.join(self.temp_dir, temp_dir)
+                        dest_temp = os.path.join(os.path.dirname(self.temp_dir), "all", temp_dir)
+                        if os.path.exists(dest_temp):
+                            shutil.rmtree(dest_temp)
+                        shutil.copytree(src_temp, dest_temp)
+
                 # 拷贝
                 cur_day = time.strftime("lane-%Y%m%d", time.localtime())
-                dir_list = os.listdir(self.temp_dir)
+                copy_dir = os.path.join(os.path.dirname(self.temp_dir), "all")
+                dir_list = os.listdir(copy_dir)
 
                 if self.dest_scp_ip != host_ip:
                     files = self.dest_sftp.listdir(path=self.dest_dir)
@@ -199,7 +218,7 @@ class ProcessLabelHandler(tornado.web.RequestHandler):
                     self.dest_sftp.mkdir(self.dest_dir)
 
                 for _dir in dir_list:
-                    old_src = os.path.join(self.temp_dir, _dir)
+                    old_src = os.path.join(copy_dir, _dir)
                     self.dest_scp.put(old_src, self.dest_dir, recursive=True)
 
             time2 = time.time()
