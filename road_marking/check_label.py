@@ -28,8 +28,8 @@ class CheckLabelHandler(tornado.web.RequestHandler):
         self.file_list = list()
         self.pixel = 50
 
-        self.src_dir = "/data/deeplearning/dataset/training/data/released_temp"
-        self.temp_dir = "/data/deeplearning/dataset/training/data/check_temp"
+        self.src_dir = "/data/deeplearning/dataset/training/data/released"
+        self.temp_dir = "/data/deeplearning/dataset/training/data/released_temp"
 
         if os.path.exists(self.temp_dir):
             file_list = os.listdir(self.temp_dir)
@@ -54,7 +54,6 @@ class CheckLabelHandler(tornado.web.RequestHandler):
         #     “images”:”原始图片目录，缺省默认为当前目录的images目录”,
         #     “pixel”:外边框像素大小，缺省默认为50,
         # }
-
         try:
             _ver = self.get_argument("version", "all")
             self.src_dir = os.path.join(self.src_dir, _ver)
@@ -62,6 +61,7 @@ class CheckLabelHandler(tornado.web.RequestHandler):
             if not os.path.exists(self.src_dir):
                 task_count = 0
                 err_code = 1
+                check_result = "dir[{}] is not exist".format(self.src_dir)
             else:
                 if not os.path.exists(self.temp_dir):
                     os.mkdir(self.temp_dir)
