@@ -13,6 +13,7 @@ import tornado.web
 
 from road_marking.model_release import ModelReleaseHandler
 from road_marking.process_label import ProcessLabelHandler
+from road_marking.process_label_local import ProcessLabelLocalHandler
 from road_marking.task_divide import TaskDivideHandler
 from road_marking.training import StartTrainingHandler
 from road_marking.check_label import CheckLabelHandler
@@ -77,6 +78,7 @@ def make_app():
         (r"/update", MainHandler),
         (r"/task", TaskDivideHandler),
         (r"/label", ProcessLabelHandler),
+        (r"/label_local", ProcessLabelLocalHandler),
         (r"/check", CheckLabelHandler),
         (r"/training", StartTrainingHandler),
         (r"/release", ModelReleaseHandler),

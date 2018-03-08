@@ -1,4 +1,3 @@
-
 # -*- coding:utf-8 -*-
 
 import tornado.web
@@ -8,21 +7,25 @@ import time
 import multiprocessing
 import logging
 import shutil
-import argparse
 
 import cv2
 import scp
 from stat import S_ISDIR
-from collections import namedtuple
 
 import numpy as np
 
-max_packages = 10000
+from utils import ServerResponse
+from utils import create_ssh_client
+from utils import host_ip, max_packages
+from utils import Task
+
+from collections import namedtuple
+
 
 Label = namedtuple(
     'Label', ['en_name', 'id', 'categoryId', 'color', 'name'])
 
-self_road_chn_labels = {
+local_road_chn_labels = {
     Label('other',          0, 0,     (64, 64, 32),       u'其他'),
     Label('ignore',         1, 1,     (0, 0, 0),          u'Ignore'),
     Label('lane',           2, 2,     (255, 0, 0),        u'车道标线'),
@@ -43,23 +46,224 @@ self_road_chn_labels = {
     Label('distance',       17, 17,   (255, 128, 255),    u'车距确认线'),
     Label('road',           18, 18,   (192, 192, 192),    u'道路'),
     Label('objects',        19, 19,   (128, 0, 0),        u'车辆及路面上其他物体'),
-    Label('emergency',      20, 20,   (229, 152, 102),    u'虚拟应急车道线'),
+    Label('curb',           20, 20,   (0, 139, 139),      u'虚拟车道线-路缘石'),
+    Label('fence',          21, 21,   (255, 106, 106),    u'虚拟车道线-防护栏'),
 }
 
 
-class Task:
-    def __init__(self, package_index, src_path, dest_path, dest_label, exit_flag=False):
-        self.package_index = package_index
-        self.src_path = src_path
-        self.dest_path = dest_path
-        self.dest_label = dest_label
-        self.exit_flag = exit_flag
+class ProcessLabelLocalHandler(tornado.web.RequestHandler):
+    def initialize(self):
 
-task_queue = multiprocessing.Manager().Queue()
-_queue = multiprocessing.Manager().Queue()
+        self.task_queue = multiprocessing.Manager().Queue()
+        self.queue = multiprocessing.Manager().Queue()
+        self.file_list = list()
+        self.pixel = 50
 
+        self.src_dir = "/data/deeplearning/dataset/training/data/local"
+        self.temp_dir = "/data/deeplearning/dataset/training/data/local_temp"
+        self.dest_dir = "/data/deeplearning/dataset/training/data/released_local"
 
-class ProcessLabelHandler():
+        self.dest_scp_ip = "192.168.5.38"
+        self.dest_scp_port = 22
+        self.dest_scp_user = "kddev"
+        self.dest_scp_passwd = "12345678"
+
+        self.dest_ssh = None
+        self.dest_scp = None
+        self.dest_sftp = None
+        if self.dest_scp_ip != host_ip:
+            self.dest_ssh = create_ssh_client(
+                server=self.dest_scp_ip,
+                port=self.dest_scp_port,
+                user=self.dest_scp_user,
+                password=self.dest_scp_passwd
+            )
+            self.dest_scp = scp.SCPClient(self.dest_ssh.get_transport())
+            self.dest_sftp = self.dest_ssh.open_sftp()
+
+        self.logger = logging.getLogger("auto-training")
+
+    def __delete__(self, instance):
+        if self.dest_scp:
+            self.dest_scp.close()
+        if self.dest_sftp:
+            self.dest_sftp.close()
+        if self.dest_ssh:
+            self.dest_ssh.close()
+
+    def isdir(self, path):
+        try:
+            return S_ISDIR(self.dest_sftp.stat(path).st_mode)
+        except IOError:
+            return False
+
+    def rm(self, path):
+        files = self.dest_sftp.listdir(path=path)
+
+        for f in files:
+            filepath = os.path.join(path, f)
+            if self.isdir(filepath):
+                self.rm(filepath)
+            else:
+                self.dest_sftp.remove(filepath)
+        self.dest_sftp.rmdir(path)
+
+    def get(self, *args, **kwargs):
+        time1 = time.time()
+
+        self.set_header('Access-Control-Allow-Origin', '*')
+        self.set_header('Content-type', 'application/json')
+
+        # {
+        #     “images”:”原始图片目录，缺省默认为当前目录的images目录”,
+        #     “pixel”:外边框像素大小，缺省默认为50,
+        # }
+
+        try:
+            _ver = self.get_argument("version", "all")
+            self.src_dir = os.path.join(self.src_dir, _ver)
+            self.temp_dir = os.path.join(self.temp_dir, _ver)
+
+            if not os.path.exists(self.src_dir):
+                task_count = 0
+                err_code = 1
+            else:
+                if not os.path.exists(self.temp_dir):
+                    os.makedirs(self.temp_dir)
+                else:
+                    # clean this directory
+                    tmp_dirs = os.listdir(self.temp_dir)
+                    for tmp_dir in tmp_dirs:
+                        if not tmp_dir.isdigit():
+                            continue
+                        tmp_path = os.path.join(self.temp_dir, tmp_dir)
+                        if os.path.isfile(tmp_path):
+                            os.remove(tmp_path)
+                        else:
+                            shutil.rmtree(tmp_path)
+
+                err_code = 0
+                for dir in range(max_packages):
+                    csv_name = "ext-" + str(dir) + ".csv"
+                    csv_file = os.path.join(self.src_dir, str(dir), csv_name)
+                    if not os.path.exists(csv_file):
+                        continue
+
+                    self.clean_dir(_csv_file=csv_file)
+                    self.prepare_crop(_csv_file=csv_file)
+
+                task_count = self.queue.qsize()
+                # start to process
+                task = Task(None, None, None, None, True)
+                self.queue.put(task)
+
+                process = multiprocessing.Process(target=self.do_work)
+                process.start()
+                self.logger.info(str(process.pid) + ", start")
+                process.join()
+                self.logger.info(str(process.pid) + ", join")
+
+                for i in range(max_packages):
+                    _sub_dir = os.path.join(self.temp_dir, str(i))
+                    if not os.path.exists(_sub_dir):
+                        continue
+
+                    dest_dir = os.path.join(self.temp_dir, str(i))
+                    if not os.path.exists(dest_dir):
+                        os.mkdir(dest_dir)
+
+                    origin_list = os.listdir(_sub_dir)
+
+                    for _image in origin_list:
+                        _image = _image.strip()
+                        if not _image.startswith("label-"):
+                            continue
+
+                        name_list = _image.split('.')
+                        if len(name_list) < 2:
+                            continue
+
+                        ext_name = name_list[1]
+                        if ext_name != 'png' and ext_name != 'jpg':
+                            continue
+
+                        # start with label-
+                        label_file = name_list[0]
+                        if label_file.startswith("label-"):
+                            label_file = label_file[6:]
+                        anna_file = label_file + ".png"
+
+                        origin_name = label_file + ".jpg"
+                        image_path = os.path.join(_sub_dir, _image)
+                        origin_image = os.path.join(_sub_dir, origin_name)
+                        if not os.path.exists(origin_image):
+                            os.remove(image_path)
+                            self.logger.error("package:{}, file missing:[{}]=>[{}]".format(str(i), origin_name, _image))
+                            continue
+
+                        result_path = os.path.join(self.temp_dir, str(i), anna_file)
+
+                        task = Task(str(i), image_path, result_path, None, False)
+                        self.task_queue.put(task)
+                for i in range(20):
+                    task = Task(None, None, None, None, True)
+                    self.task_queue.put(task)
+
+                all_processes = []
+                for i in range(20):
+                    process = multiprocessing.Process(target=self.transform)
+                    all_processes.append(process)
+
+                for process in all_processes:
+                    process.start()
+                    self.logger.info(str(process.pid) + ", start")
+
+                for process in all_processes:
+                    process.join()
+                    self.logger.info(str(process.pid) + ", join")
+
+                # 先拷贝到all目录下
+                if _ver != "all":
+                    temp_dir_list = os.listdir(self.temp_dir)
+                    for temp_dir in temp_dir_list:
+                        if not temp_dir.isdigit():
+                            continue
+                        src_temp = os.path.join(self.temp_dir, temp_dir)
+                        dest_temp = os.path.join(os.path.dirname(self.temp_dir), "all", temp_dir)
+                        if os.path.exists(dest_temp):
+                            shutil.rmtree(dest_temp)
+                        shutil.copytree(src_temp, dest_temp)
+
+                # 拷贝
+                copy_dir = os.path.join(os.path.dirname(self.temp_dir), "all")
+                dir_list = os.listdir(copy_dir)
+
+                for _dir in dir_list:
+                    old_src = os.path.join(copy_dir, _dir)
+                    new_dest = os.path.join(self.dest_dir, "all", _dir)
+                    shutil.copytree(old_src, new_dest)
+
+            time2 = time.time()
+            result_obj = {
+                "count": str(task_count),
+                "time": str(time2-time1)+" s"
+            }
+            resp = ServerResponse(err_code=err_code, err_info=None, result=result_obj)
+            resp_str = resp.generate_response()
+            self.logger.info(resp_str)
+
+            self.write(resp_str)
+        except Exception as err:
+            err_info = repr(err)
+            json_res = {"code": "99", "msg": str(err_info)}
+            self.logger.error(json.dumps(json_res))
+            self.write(json.dumps(json_res))
+        except:
+            self.write('{"code": "99", "msg": "unknown exception"}')
+            self.logger.error('{"code": "99", "msg": "unknown exception"}')
+
+        self.finish()
+
     def prepare_crop(self, _csv_file):
         root_dir = os.path.dirname(_csv_file)
         csv_name = os.path.basename(_csv_file)
@@ -73,7 +277,7 @@ class ProcessLabelHandler():
         list_file = csv_name + ".csv"
         list_path = os.path.join(root_dir, list_file)
 
-        temp_dir = os.path.join(dest_dir, package_index)
+        temp_dir = os.path.join(self.temp_dir, package_index)
         if not os.path.exists(temp_dir):
             os.mkdir(temp_dir)
 
@@ -102,7 +306,7 @@ class ProcessLabelHandler():
                 origin_image = os.path.join(root_dir, image[4:])
                 if not os.path.exists(origin_image):
                     line_str = f.readline()
-                    print ("package:{}, file missing:[{}]=>[{}]".format(package_index, image, label))
+                    self.logger.error("package:{}, file missing:[{}]=>[{}]".format(package_index, image, label))
                     continue
                 else:
                     dest_origin_image = os.path.join(temp_dir, image[4:])
@@ -110,7 +314,7 @@ class ProcessLabelHandler():
 
                 if not os.path.exists(os.path.join(root_dir, label)):
                     line_str = f.readline()
-                    print ("package:{}, file missing:[{}]=>[{}]".format(package_index, image, label))
+                    self.logger.error("package:{}, file missing:[{}]=>[{}]".format(package_index, image, label))
                     continue
 
                 _src = os.path.join(root_dir, label)
@@ -119,16 +323,16 @@ class ProcessLabelHandler():
                 _dest_label = _dest_label.strip()
 
                 task = Task(package_index, _src, _dest_label, None)
-                _queue.put(task)
+                self.queue.put(task)
 
                 line_str = f.readline()
 
     def do_work(self):
-        if _queue.empty():
+        if self.queue.empty():
             return
 
-        while not _queue.empty():
-            task = _queue.get()
+        while not self.queue.empty():
+            task = self.queue.get()
 
             if not isinstance(task, Task):
                 break
@@ -150,11 +354,11 @@ class ProcessLabelHandler():
             cv2.imwrite(_dest, crop_img)
 
             time2 = time.time()
-            print ("process[{}/{}] in {} s".format(task.package_index, _src, time2 - time1))
+            self.logger.info("process[{}/{}] in {} s".format(task.package_index, _src, time2 - time1))
 
     def transform(self):
-        while not task_queue.empty():
-            task = task_queue.get()
+        while not self.task_queue.empty():
+            task = self.task_queue.get()
 
             if not isinstance(task, Task):
                 break
@@ -169,7 +373,7 @@ class ProcessLabelHandler():
 
             img = cv2.imread(image_path)
             if img is None:
-                print ("image is none[{}/{}]".format(task.package_index, image_path))
+                self.logger.error("image is none[{}/{}]".format(task.package_index, image_path))
                 continue
 
             width = img.shape[1]
@@ -183,7 +387,7 @@ class ProcessLabelHandler():
             #         other_category = label.categoryId
             #         break
 
-            for label in self_road_chn_labels:
+            for label in local_road_chn_labels:
                 color = (label.color[2], label.color[1], label.color[0])
                 label_data[np.where((img == color).all(axis=2))] = label.categoryId
 
@@ -198,7 +402,7 @@ class ProcessLabelHandler():
                 if file_name.startswith("label-"):
                     file_name = file_name[6:]
                 origin_image_path = os.path.join(os.path.dirname(image_path), file_name+".jpg")
-                print ("label[{}/{}] not qualified".format(task.package_index, image_path))
+                self.logger.error("label[{}/{}] not qualified".format(task.package_index, image_path))
 
                 if os.path.exists(origin_image_path):
                     os.remove(origin_image_path)
@@ -208,7 +412,7 @@ class ProcessLabelHandler():
                 cv2.imwrite(result_path, label_data)
 
             time2 = time.time()
-            print ("process[{}/{}] in {} s".format(task.package_index, image_path, time2 - time1))
+            self.logger.info("process[{}/{}] in {} s".format(task.package_index, image_path, time2 - time1))
 
     def clean_dir(self, _csv_file):
         image_list = []
@@ -255,14 +459,14 @@ class ProcessLabelHandler():
 
                 if not os.path.exists(image_path):
                     if os.path.exists(label_path):
-                        print ("package:{}, not match:[{}] not exist=>[{}] exist".format(package_index, image, label))
+                        self.logger.error("package:{}, not match:[{}] not exist=>[{}] exist".format(package_index, image, label))
                         if os.path.exists(label_path):
                             os.remove(label_path)
                     else:
-                        print ("package:{}, file missing:[{}]=>[{}]".format(package_index, image, label))
+                        self.logger.error("package:{}, file missing:[{}]=>[{}]".format(package_index, image, label))
                 else:
                     if not os.path.exists(label_path):
-                        print ("package:{}, not match:[{}] exist=>[{}] not exist".format(package_index, image, label))
+                        self.logger.error("package:{}, not match:[{}] exist=>[{}] not exist".format(package_index, image, label))
                         if os.path.exists(image_path):
                             os.remove(image_path)
 
@@ -273,116 +477,7 @@ class ProcessLabelHandler():
             file_id = str(file_id).strip()
             if file_id not in image_list:
                 file_delete = os.path.join(root_dir, file_id)
-                print ("package:{}, file wrong:[{}]".format(package_index, file_id))
+                self.logger.error("package:{}, file wrong:[{}]".format(package_index, file_id))
                 if os.path.exists(file_delete):
                     if os.path.isfile(file_delete):
                         os.remove(file_delete)
-
-if __name__ == '__main__':
-
-    parser = argparse.ArgumentParser()
-    parser.add_argument('--src_dir', type=str, required=True)
-    parser.add_argument('--dest_dir', type=str, required=True)
-    parser.add_argument('--start', type=int, required=True, default=1)
-    parser.add_argument('--step', type=int, required=False, default=20)
-    args = parser.parse_args()
-
-    time1 = time.time()
-
-    _proc_handler = ProcessLabelHandler()
-    src_dir = args.src_dir
-    dest_dir = args.dest_dir
-    start = args.start
-
-    # {
-    #     “images”:”原始图片目录，缺省默认为当前目录的images目录”,
-    #     “pixel”:外边框像素大小，缺省默认为50,
-    # }
-
-    if not os.path.exists(dest_dir):
-        os.mkdir(dest_dir)
-
-    err_code = 0
-    for dir in range(max_packages):
-        csv_name = "ext-" + str(dir) + ".csv"
-        csv_file = os.path.join(src_dir, str(dir), csv_name)
-        if not os.path.exists(csv_file):
-            continue
-
-        _proc_handler.clean_dir(_csv_file=csv_file)
-        _proc_handler.prepare_crop(_csv_file=csv_file)
-
-    file_list = list()
-    pixel = 50
-
-    task_count = _queue.qsize()
-    # start to process
-    task = Task(None, None, None, None, True)
-    _queue.put(task)
-
-    process = multiprocessing.Process(target=_proc_handler.do_work)
-    process.start()
-    process.join()
-
-    for i in range(max_packages):
-        _sub_dir = os.path.join(dest_dir, str(i))
-        if not os.path.exists(_sub_dir):
-            continue
-
-        _dest_dir = os.path.join(dest_dir, str(i))
-        if not os.path.exists(_dest_dir):
-            os.mkdir(_dest_dir)
-
-        origin_list = os.listdir(_sub_dir)
-
-        for _image in origin_list:
-            _image = _image.strip()
-            if not _image.startswith("label-"):
-                continue
-
-            name_list = _image.split('.')
-            if len(name_list) < 2:
-                continue
-
-            ext_name = name_list[1]
-            if ext_name != 'png' and ext_name != 'jpg':
-                continue
-
-            # start with label-
-            label_file = name_list[0]
-            if label_file.startswith("label-"):
-                label_file = label_file[6:]
-            anna_file = label_file + ".png"
-
-            origin_name = label_file + ".jpg"
-            image_path = os.path.join(_sub_dir, _image)
-            origin_image = os.path.join(_sub_dir, origin_name)
-            if not os.path.exists(origin_image):
-                os.remove(image_path)
-                continue
-
-            result_path = os.path.join(dest_dir, str(i), anna_file)
-
-            task = Task(str(i), image_path, result_path, None, False)
-            task_queue.put(task)
-    for i in range(20):
-        task = Task(None, None, None, None, True)
-        task_queue.put(task)
-
-    all_processes = []
-    for i in range(20):
-        process = multiprocessing.Process(target=_proc_handler.transform)
-        all_processes.append(process)
-
-    for process in all_processes:
-        process.start()
-
-    for process in all_processes:
-        process.join()
-
-    time2 = time.time()
-    result_obj = {
-        "count": str(task_count),
-        "time": str(time2 - time1) + " s"
-    }
-    print(result_obj)
