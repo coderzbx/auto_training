@@ -194,19 +194,22 @@ class ProcessLabelHandler(tornado.web.RequestHandler):
                     self.logger.info(str(process.pid) + ", join")
 
                 # 先拷贝到all目录下
-                if _ver != "all":
-                    temp_dir_list = os.listdir(self.temp_dir)
-                    for temp_dir in temp_dir_list:
-                        if not temp_dir.isdigit():
-                            continue
-                        src_temp = os.path.join(self.temp_dir, temp_dir)
-                        dest_temp = os.path.join(os.path.dirname(self.temp_dir), "all", temp_dir)
-                        if os.path.exists(dest_temp):
-                            shutil.rmtree(dest_temp)
-                        shutil.copytree(src_temp, dest_temp)
+                # if _ver != "all":
+                #     temp_dir_list = os.listdir(self.temp_dir)
+                #     for temp_dir in temp_dir_list:
+                #         if not temp_dir.isdigit():
+                #             continue
+                #         src_temp = os.path.join(self.temp_dir, temp_dir)
+                #         dest_temp = os.path.join(os.path.dirname(self.temp_dir), "all", temp_dir)
+                #         if os.path.exists(dest_temp):
+                #             shutil.rmtree(dest_temp)
+                #         shutil.copytree(src_temp, dest_temp)
 
                 # 拷贝
-                cur_day = time.strftime("lane-%Y%m%d", time.localtime())
+                if _ver != "all":
+                    cur_day = time.strftime("lane-aug-%Y%m%d", time.localtime())
+                else:
+                    cur_day = time.strftime("lane-all-%Y%m%d", time.localtime())
                 copy_dir = os.path.join(os.path.dirname(self.temp_dir), "all")
                 dir_list = os.listdir(copy_dir)
 
