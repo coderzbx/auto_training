@@ -162,7 +162,7 @@ class TaskDivideHandler(tornado.web.RequestHandler):
                     self.prepare_extend(_csv_file=csv_file)
 
                     task = Task(None, None, None, True)
-                    self.queue.put(task)
+                    global_queue.divide_queue.put(task)
 
                     process = multiprocessing.Process(target=self.do_work)
                     process.daemon = True
