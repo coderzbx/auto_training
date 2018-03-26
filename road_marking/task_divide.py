@@ -17,11 +17,11 @@ from utils import Task
 from utils import create_ssh_client
 from utils import host_ip, max_packages
 
+import global_queue
+
 
 class TaskDivideHandler(tornado.web.RequestHandler):
     def initialize(self):
-        self.task_queue = multiprocessing.Manager().Queue()
-        self.queue = multiprocessing.Manager().Queue()
         self.file_list = list()
         self.pixel = 50
         self.step = 20
@@ -133,7 +133,7 @@ class TaskDivideHandler(tornado.web.RequestHandler):
                     cnt_per_package=self.step
                 )
 
-                task_count = self.task_queue.qsize()
+                task_count = global_queue.extend_queue.qsize()
 
                 # start to process
                 _task = Task(
@@ -143,9 +143,10 @@ class TaskDivideHandler(tornado.web.RequestHandler):
                     dest_label=None,
                     exit_flag=True
                 )
-                self.task_queue.put(_task)
+                global_queue.extend_queue.put(_task)
 
                 process = multiprocessing.Process(target=self.do)
+                process.daemon = True
                 process.start()
                 process.join()
 
@@ -164,6 +165,7 @@ class TaskDivideHandler(tornado.web.RequestHandler):
                     self.queue.put(task)
 
                     process = multiprocessing.Process(target=self.do_work)
+                    process.daemon = True
                     process.start()
                     process.join()
 
@@ -236,7 +238,7 @@ class TaskDivideHandler(tornado.web.RequestHandler):
                 dest_path=dest_path,
                 dest_label=dest_label
             )
-            self.task_queue.put(_task)
+            global_queue.extend_queue.put(_task)
 
             file_index += 1
             if file_index == cnt_per_package:
@@ -283,7 +285,7 @@ class TaskDivideHandler(tornado.web.RequestHandler):
                 _src = _src.strip()
                 _dest_image = _dest_image.strip()
                 task = Task(package_index, _src, _dest_image, None)
-                self.queue.put(task)
+                global_queue.divide_queue.put(task)
 
                 _src = os.path.join(root_dir, label)
                 _src = _src.strip()
@@ -295,7 +297,7 @@ class TaskDivideHandler(tornado.web.RequestHandler):
                 ext_list.append(_out_str)
 
                 task = Task(package_index, _src, _dest_label, None)
-                self.queue.put(task)
+                global_queue.divide_queue.put(task)
 
                 line_str = f.readline()
         ext_list.sort()
@@ -310,11 +312,11 @@ class TaskDivideHandler(tornado.web.RequestHandler):
         os.rename(_csv_file, new_file_path)
 
     def do_work(self):
-        if self.queue.empty():
+        if global_queue.divide_queue.empty():
             return
 
-        while not self.queue.empty():
-            task = self.queue.get()
+        while not global_queue.divide_queue.empty():
+            task = global_queue.divide_queue.get()
 
             if not isinstance(task, Task):
                 break
@@ -338,11 +340,11 @@ class TaskDivideHandler(tornado.web.RequestHandler):
             cv2.imwrite(_dest, blank_image)
 
     def do(self):
-        if self.task_queue.empty():
+        if global_queue.extend_queue.empty():
             return
 
-        while not self.task_queue.empty():
-            _task = self.task_queue.get()
+        while not global_queue.extend_queue.empty():
+            _task = global_queue.extend_queue.get()
 
             if not isinstance(_task, Task):
                 break

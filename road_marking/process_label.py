@@ -21,12 +21,11 @@ from utils import host_ip, max_packages
 from utils import Task
 from utils import self_road_chn_labels
 
+import global_queue
+
 
 class ProcessLabelHandler(tornado.web.RequestHandler):
     def initialize(self):
-
-        self.task_queue = multiprocessing.Manager().Queue()
-        self.queue = multiprocessing.Manager().Queue()
         self.file_list = list()
         self.pixel = 50
 
@@ -123,16 +122,18 @@ class ProcessLabelHandler(tornado.web.RequestHandler):
                     self.clean_dir(_csv_file=csv_file)
                     self.prepare_crop(_csv_file=csv_file)
 
-                task_count = self.queue.qsize()
+                task_count = global_queue.cut_queue.qsize()
                 # start to process
                 task = Task(None, None, None, None, True)
-                self.queue.put(task)
+                global_queue.cut_queue.put(task)
 
-                process = multiprocessing.Process(target=self.do_work)
-                process.start()
-                self.logger.info(str(process.pid) + ", start")
-                process.join()
-                self.logger.info(str(process.pid) + ", join")
+                self.do_work()
+                # process = multiprocessing.Process(target=self.do_work)
+                # # process.daemon = True
+                # process.start()
+                # self.logger.info(str(process.pid) + ", start")
+                # process.join()
+                # self.logger.info(str(process.pid) + ", join")
 
                 for i in range(max_packages):
                     _sub_dir = os.path.join(self.temp_dir, str(i))
@@ -175,14 +176,15 @@ class ProcessLabelHandler(tornado.web.RequestHandler):
                         result_path = os.path.join(self.temp_dir, str(i), anna_file)
 
                         task = Task(str(i), image_path, result_path, None, False)
-                        self.task_queue.put(task)
+                        global_queue.task_queue.put(task)
                 for i in range(20):
                     task = Task(None, None, None, None, True)
-                    self.task_queue.put(task)
+                    global_queue.task_queue.put(task)
 
                 all_processes = []
                 for i in range(20):
                     process = multiprocessing.Process(target=self.transform)
+                    process.daemon = True
                     all_processes.append(process)
 
                 for process in all_processes:
@@ -210,7 +212,8 @@ class ProcessLabelHandler(tornado.web.RequestHandler):
                     cur_day = time.strftime("lane-aug-%Y%m%d", time.localtime())
                 else:
                     cur_day = time.strftime("lane-all-%Y%m%d", time.localtime())
-                copy_dir = os.path.join(os.path.dirname(self.temp_dir), "all")
+                # copy_dir = os.path.join(os.path.dirname(self.temp_dir), "all")
+                copy_dir = self.temp_dir
                 dir_list = os.listdir(copy_dir)
 
                 if self.dest_scp_ip != host_ip:
@@ -304,16 +307,16 @@ class ProcessLabelHandler(tornado.web.RequestHandler):
                 _dest_label = _dest_label.strip()
 
                 task = Task(package_index, _src, _dest_label, None)
-                self.queue.put(task)
+                global_queue.cut_queue.put(task)
 
                 line_str = f.readline()
 
     def do_work(self):
-        if self.queue.empty():
+        if global_queue.cut_queue.empty():
             return
 
-        while not self.queue.empty():
-            task = self.queue.get()
+        while not global_queue.cut_queue.empty():
+            task = global_queue.cut_queue.get()
 
             if not isinstance(task, Task):
                 break
@@ -330,7 +333,6 @@ class ProcessLabelHandler(tornado.web.RequestHandler):
             width = img.shape[1]
             height = img.shape[0]
 
-            self.pixel = int((width - 2448) / 2)
             crop_img = img[self.pixel:height - self.pixel, self.pixel:width - self.pixel]
             cv2.imwrite(_dest, crop_img)
 
@@ -338,8 +340,8 @@ class ProcessLabelHandler(tornado.web.RequestHandler):
             self.logger.info("process[{}/{}] in {} s".format(task.package_index, _src, time2 - time1))
 
     def transform(self):
-        while not self.task_queue.empty():
-            task = self.task_queue.get()
+        while not global_queue.task_queue.empty():
+            task = global_queue.task_queue.get()
 
             if not isinstance(task, Task):
                 break
@@ -394,6 +396,7 @@ class ProcessLabelHandler(tornado.web.RequestHandler):
 
             time2 = time.time()
             self.logger.info("process[{}/{}] in {} s".format(task.package_index, image_path, time2 - time1))
+        exit(0)
 
     def clean_dir(self, _csv_file):
         image_list = []
