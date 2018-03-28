@@ -99,6 +99,10 @@ class TaskDivideRemoteHandler(tornado.web.RequestHandler):
 
         try:
 
+            step = self.get_argument("step", "20")
+            step = int(step)
+            self.step = step
+
             if self.src_scp_ip != host_ip:
                 # 拷贝文件
                 if not os.path.exists(self.src_dir):
@@ -139,29 +143,6 @@ class TaskDivideRemoteHandler(tornado.web.RequestHandler):
                 process.daemon = True
                 process.start()
                 process.join()
-
-                # 开始增加边框
-                for dir in range(self.start, max_packages):
-                    time1 = time.time()
-
-                    csv_name = str(dir) + ".csv"
-                    csv_file = os.path.join(self.dest_dir, str(dir), csv_name)
-                    if not os.path.exists(csv_file):
-                        continue
-
-                    self.prepare_extend(_csv_file=csv_file)
-
-                    task = Task(None, None, None, True)
-                    global_queue.divide_queue.put(task)
-
-                    process = multiprocessing.Process(target=self.do_work)
-                    process.daemon = True
-                    process.start()
-                    process.join()
-
-                    time2 = time.time()
-
-                    self.logger.info("process[{}] in {} s".format(dir, time2 - time1))
 
             time_end = time.time()
             result_obj = {

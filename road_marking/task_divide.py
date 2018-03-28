@@ -98,6 +98,9 @@ class TaskDivideHandler(tornado.web.RequestHandler):
         # }
 
         try:
+            step = self.get_argument("step", "20")
+            step = int(step)
+            self.step = step
 
             if self.src_scp_ip != host_ip:
                 # 拷贝文件
