@@ -303,10 +303,10 @@ class ReleaseOnlineHandler(tornado.web.RequestHandler):
                 # 校验"其他"类别的占比
                 other_count = np.sum(instance_data == 255)
                 valid_count = width * height * 0.01
-                # if other_count > valid_count:
-                #     self.logger.error("label[{}/{}] not qualified".format(task.task_id, task.track_point_id))
-                #     err_code = 1
-                #     raise Exception("label[{}/{}] not qualified".format(task.task_id, task.track_point_id))
+                if other_count > valid_count:
+                    self.logger.error("label[{}/{}] not qualified".format(task.task_id, task.track_point_id))
+                    err_code = 1
+                    raise Exception("label[{}/{}] not qualified".format(task.task_id, task.track_point_id))
 
                 image_path1 = os.path.join(self.temp_dir, "{}.jpg".format(task.track_point_id))
                 label_path1 = os.path.join(self.temp_dir, "label-{}.png".format(task.track_point_id))
