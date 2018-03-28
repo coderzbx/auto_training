@@ -35,7 +35,8 @@ self_road_chn_labels = {
     Label('distance',       17, 17,   (255, 128, 255),    u'车距确认线'),
     Label('road',           18, 18,   (192, 192, 192),    u'道路'),
     Label('objects',        19, 19,   (128, 0, 0),        u'车辆及路面上其他物体'),
-    Label('emergency',      20, 20,   (229, 152, 102),    u'虚拟应急车道线'),
+    Label('curb',           20, 20,   (0, 139, 139),      u'虚拟车道线-路缘石'),
+    Label('fence',          21, 21,   (255, 106, 106),    u'虚拟车道线-防护栏'),
 }
 
 
@@ -77,6 +78,23 @@ class Task:
         self.src_path = src_path
         self.dest_path = dest_path
         self.dest_label = dest_label
+        self.exit_flag = exit_flag
+
+
+class RemoteTask:
+    def __init__(self, package_index, src_path, dest_path, exit_flag=False):
+        self.package_index = package_index
+        self.src_path = src_path
+        self.dest_path = dest_path
+        self.exit_flag = exit_flag
+
+
+class OnlineTask:
+    def __init__(self, track_point_id, task_id, image_data, label_data, exit_flag=False):
+        self.track_point_id = track_point_id
+        self.task_id = task_id
+        self.image_data = image_data
+        self.label_data = label_data
         self.exit_flag = exit_flag
 
 
