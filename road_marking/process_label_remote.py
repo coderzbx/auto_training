@@ -19,7 +19,7 @@ from utils import ServerResponse
 from utils import create_ssh_client
 from utils import host_ip, max_packages
 from utils import Task
-from utils import self_road_chn_labels
+from label import self_road_chn_labels
 
 import global_queue
 
