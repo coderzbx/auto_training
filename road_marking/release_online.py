@@ -239,6 +239,8 @@ class ReleaseOnlineHandler(tornado.web.RequestHandler):
             resp_str = resp.generate_response()
             self.logger.info(resp_str)
 
+            del global_queue.online_result[:]
+
             self.write(resp_str)
         except Exception as err:
             err_info = repr(err)
@@ -328,13 +330,10 @@ class ReleaseOnlineHandler(tornado.web.RequestHandler):
                 cv2.imwrite(instance_path, instance_data)
 
                 # callback
-                callback_url = "{}/mark/commit".format(self.released_url)
-                post_data = {
-                    "claimId": task.task_id,
-                    "status": str(err_code)
-                }
-                resp = requests.post(url=callback_url, data=json.dumps(post_data))
-                if resp.status_code != 200:
+                callback_url = "{}/mark/commit?claimId={}&status={}".format(
+                    self.released_url, task.task_id, str(err_code))
+                resp = requests.post(url=callback_url)
+                if resp.status_code != 204:
                     self.logger.error("{} callback error:{}".format(task.task_id, resp.text.encode("UTF-8")))
                 global_queue.online_result.append(
                     {"claimId": task.task_id, "status": str(err_code), "callback": "{}".format(resp.text.encode("UTF-8"))})
@@ -342,13 +341,10 @@ class ReleaseOnlineHandler(tornado.web.RequestHandler):
                 time2 = time.time()
                 self.logger.info("process[{}/{}] in {} s".format(task.task_id, task.track_point_id, time2 - time1))
             except Exception as e:
-                callback_url = "{}/mark/commit".format(self.released_url)
-                post_data = {
-                    "claimId": task.task_id,
-                    "status": str(err_code)
-                }
-                resp = requests.post(url=callback_url, data=json.dumps(post_data))
-                if resp.status_code != 200:
+                callback_url = "{}/mark/commit?claimId={}&status={}".format(
+                    self.released_url, task.task_id, str(err_code))
+                resp = requests.post(url=callback_url)
+                if resp.status_code != 204:
                     self.logger.error("{} callback error:{}".format(task.task_id, resp.text.encode("UTF-8")))
 
                 global_queue.online_result.append(
