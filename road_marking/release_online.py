@@ -220,10 +220,21 @@ class ReleaseOnlineHandler(tornado.web.RequestHandler):
                 self.dest_scp.put(old_src, self.dest_dir, recursive=True)
 
             time2 = time.time()
+            success_count = 0
+            fail_count = 0
+            for result_info in global_queue.online_result:
+                if result_info["status"] == "0":
+                    success_count += 1
+                else:
+                    fail_count += 1
             result_obj = {
-                "count": str(task_count),
-                "time": str(time2-time1)+" s"
+                "total": str(task_count),
+                "success": str(success_count),
+                "fail": str(fail_count),
+                "time": str(time2 - time1) + " s",
+                "data": list(global_queue.online_result)
             }
+
             resp = ServerResponse(err_code=err_code, err_info=None, result=result_obj)
             resp_str = resp.generate_response()
             self.logger.info(resp_str)
@@ -324,7 +335,9 @@ class ReleaseOnlineHandler(tornado.web.RequestHandler):
                 }
                 resp = requests.post(url=callback_url, data=json.dumps(post_data))
                 if resp.status_code != 200:
-                    self.logger.error("{} callback error:{}".format(task.task_id, resp.text))
+                    self.logger.error("{} callback error:{}".format(task.task_id, resp.text.encode("UTF-8")))
+                global_queue.online_result.append(
+                    {"claimId": task.task_id, "status": str(err_code), "callback": "{}".format(resp.text.encode("UTF-8"))})
 
                 time2 = time.time()
                 self.logger.info("process[{}/{}] in {} s".format(task.task_id, task.track_point_id, time2 - time1))
@@ -336,7 +349,10 @@ class ReleaseOnlineHandler(tornado.web.RequestHandler):
                 }
                 resp = requests.post(url=callback_url, data=json.dumps(post_data))
                 if resp.status_code != 200:
-                    self.logger.error("{} callback error:{}".format(task.task_id, resp.text))
+                    self.logger.error("{} callback error:{}".format(task.task_id, resp.text.encode("UTF-8")))
+
+                global_queue.online_result.append(
+                    {"claimId": task.task_id, "status": str(err_code), "callback": "{}".format(resp.text.encode("UTF-8"))})
 
                 self.logger.error(repr(e))
         exit(0)

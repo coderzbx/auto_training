@@ -13,3 +13,4 @@ extend_queue = manager.Queue()
 remote_extend_queue = manager.Queue()
 
 online_queue = manager.Queue()
+online_result = manager.list()
