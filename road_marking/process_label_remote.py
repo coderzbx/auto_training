@@ -351,6 +351,8 @@ class ProcessLabelRemoteHandler(tornado.web.RequestHandler):
                 cv2.imwrite(result_path, label_data)
                 dest_image_path = result_path[:-3] + "jpg"
                 shutil.copy(origin_image_path, dest_image_path)
+                dest_label_path = os.path.join(os.path.dirname(result_path), os.path.basename(image_path))
+                shutil.copy(image_path, dest_label_path)
 
             time2 = time.time()
             self.logger.info("process[{}/{}] in {} s".format(task.package_index, image_path, time2 - time1))
