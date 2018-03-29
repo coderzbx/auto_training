@@ -213,7 +213,7 @@ class TaskDivideRemoteHandler(tornado.web.RequestHandler):
 
             file_index += 1
             if file_index == cnt_per_package:
-                dest_file = str(package_index) + ".csv"
+                dest_file = "ext-" + str(package_index) + ".csv"
                 dest_file_path = os.path.join(dest_dir, str(package_index), dest_file)
 
                 with open(dest_file_path, "w") as f:
@@ -225,7 +225,7 @@ class TaskDivideRemoteHandler(tornado.web.RequestHandler):
                 file_index = 0
                 package_index += 1
             elif total_index == total_count:
-                dest_file = str(package_index) + ".csv"
+                dest_file = "ext-" + str(package_index) + ".csv"
                 dest_file_path = os.path.join(dest_dir, str(package_index), dest_file)
 
                 with open(dest_file_path, "w") as f:

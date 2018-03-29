@@ -123,6 +123,7 @@ class ProcessLabelRemoteHandler(tornado.web.RequestHandler):
                     self.prepare_crop(_csv_file=csv_file)
 
                 task_count = global_queue.remote_cut_queue.qsize()
+                task_count = task_count // 2
                 # start to process
                 task = Task(None, None, None, None, True)
                 global_queue.remote_cut_queue.put(task)
@@ -130,13 +131,13 @@ class ProcessLabelRemoteHandler(tornado.web.RequestHandler):
                 self.do_work()
 
                 for i in range(max_packages):
-                    _sub_dir = os.path.join(self.temp_dir, str(i))
+                    _sub_dir = os.path.join(self.src_dir, str(i))
                     if not os.path.exists(_sub_dir):
                         continue
 
                     dest_dir = os.path.join(self.temp_dir, str(i))
                     if not os.path.exists(dest_dir):
-                        os.mkdir(dest_dir)
+                        os.makedirs(dest_dir)
 
                     origin_list = os.listdir(_sub_dir)
 
@@ -160,11 +161,11 @@ class ProcessLabelRemoteHandler(tornado.web.RequestHandler):
 
                         result_path = os.path.join(self.temp_dir, str(i), anna_file)
 
-                        task = Task(str(i), image_path, result_path, None, False)
-                        global_queue.task_queue.put(task)
+                        task = Task(str(i), image_path, result_path, origin_image, False)
+                        global_queue.remote_process_queue.put(task)
                 for i in range(20):
                     task = Task(None, None, None, None, True)
-                    global_queue.task_queue.put(task)
+                    global_queue.remote_process_queue.put(task)
 
                 all_processes = []
                 for i in range(20):
@@ -294,8 +295,8 @@ class ProcessLabelRemoteHandler(tornado.web.RequestHandler):
             self.logger.info("process[{}/{}] in {} s".format(task.package_index, _src, time2 - time1))
 
     def transform(self):
-        while not global_queue.task_queue.empty():
-            task = global_queue.task_queue.get()
+        while not global_queue.remote_process_queue.empty():
+            task = global_queue.remote_process_queue.get()
 
             if not isinstance(task, Task):
                 break
@@ -305,6 +306,7 @@ class ProcessLabelRemoteHandler(tornado.web.RequestHandler):
 
             image_path = task.src_path
             result_path = task.dest_path
+            origin_image_path = task.dest_label
 
             time1 = time.time()
 
@@ -347,6 +349,8 @@ class ProcessLabelRemoteHandler(tornado.web.RequestHandler):
                     os.remove(image_path)
             else:
                 cv2.imwrite(result_path, label_data)
+                dest_image_path = result_path[:-3] + "jpg"
+                shutil.copy(origin_image_path, dest_image_path)
 
             time2 = time.time()
             self.logger.info("process[{}/{}] in {} s".format(task.package_index, image_path, time2 - time1))
