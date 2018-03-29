@@ -149,7 +149,7 @@ class ReleaseOnlineHandler(tornado.web.RequestHandler):
             image_seq = "000"
             image_suffix = "jpg"
             for task in released_tasks:
-                task_id = task["id"]
+                task_id = task["processInstanceId"]
                 variables = task["variables"]
                 for variable in variables:
                     if variable["name"] == "TRACKPOINTID":
