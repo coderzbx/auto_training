@@ -219,12 +219,16 @@ class ProcessLabelHandler(tornado.web.RequestHandler):
                 if self.dest_scp_ip != host_ip:
                     files = self.dest_sftp.listdir(path=self.dest_dir)
                     self.dest_dir = os.path.join(self.dest_dir, cur_day)
-                    if cur_day in files:
-                        self.rm(self.dest_dir)
-                    self.dest_sftp.mkdir(self.dest_dir)
+                    # if cur_day in files:
+                    #     self.rm(self.dest_dir)
+                    if cur_day not in files:
+                        self.dest_sftp.mkdir(self.dest_dir)
 
                 for _dir in dir_list:
                     old_src = os.path.join(copy_dir, _dir)
+                    files = self.dest_sftp.listdir(path=self.dest_dir)
+                    if _dir in files:
+                        self.rm(os.path.join(self.dest_dir, _dir))
                     self.dest_scp.put(old_src, self.dest_dir, recursive=True)
 
             time2 = time.time()
