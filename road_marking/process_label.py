@@ -100,17 +100,17 @@ class ProcessLabelHandler(tornado.web.RequestHandler):
             else:
                 if not os.path.exists(self.temp_dir):
                     os.makedirs(self.temp_dir)
-                else:
-                    # clean this directory
-                    tmp_dirs = os.listdir(self.temp_dir)
-                    for tmp_dir in tmp_dirs:
-                        if not tmp_dir.isdigit():
-                            continue
-                        tmp_path = os.path.join(self.temp_dir, tmp_dir)
-                        if os.path.isfile(tmp_path):
-                            os.remove(tmp_path)
-                        else:
-                            shutil.rmtree(tmp_path)
+                # else:
+                #     # clean this directory
+                #     tmp_dirs = os.listdir(self.temp_dir)
+                #     for tmp_dir in tmp_dirs:
+                #         if not tmp_dir.isdigit():
+                #             continue
+                #         tmp_path = os.path.join(self.temp_dir, tmp_dir)
+                #         if os.path.isfile(tmp_path):
+                #             os.remove(tmp_path)
+                #         else:
+                #             shutil.rmtree(tmp_path)
 
                 err_code = 0
                 for dir in range(max_packages):
