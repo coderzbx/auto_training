@@ -72,12 +72,22 @@ class MainHandler(tornado.web.RequestHandler):
         self.finish()
 
 
+class IconHandler(tornado.web.RequestHandler):
+    def get(self, *args, **kwargs):
+        self.set_header('Access-Control-Allow-Origin', '*')
+        self.set_header('Content-type', 'application/json')
+
+        self.write('auto-training')
+        self.finish()
+
+
 def make_app():
     # generate_task = r"/{}/task".format(context)
     # process_label = r"/{}/label".format(context)
     # start_training = r"/{}/training".format(context)
     # release = r"/{}/release".format(context)
     return tornado.web.Application([
+        (r"/favicon.ico", IconHandler),
         (r"/update", MainHandler),
         (r"/task", TaskDivideHandler),
         (r"/task/remote", TaskDivideRemoteHandler),
