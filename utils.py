@@ -42,6 +42,7 @@ self_road_chn_labels = {
     Label('left_wait',      24, 24,   (144, 238, 144),    u'左弯待转区线'),
     Label('guide_lane',     25, 25,   (0, 255, 127),      u'可变导向车道线'),
     Label('lane_y',         26, 26,   (255, 165, 0),      u'车道标线-黄色'),
+    Label('hump',           27, 27,   (72, 61, 139),      u'减速丘'),
 }
 
 
