@@ -139,6 +139,14 @@ class TaskDivideRemoteHandler(tornado.web.RequestHandler):
 
                 task_count = global_queue.remote_extend_queue.qsize()
 
+                _task = RemoteTask(
+                    package_index=None,
+                    src_path=None,
+                    dest_path=None,
+                    exit_flag=True
+                )
+                global_queue.remote_extend_queue.put(_task)
+
                 process = multiprocessing.Process(target=self.do)
                 process.daemon = True
                 process.start()

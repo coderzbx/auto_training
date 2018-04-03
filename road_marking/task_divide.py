@@ -90,6 +90,10 @@ class TaskDivideHandler(tornado.web.RequestHandler):
         self.set_header('Access-Control-Allow-Origin', '*')
         self.set_header('Content-type', 'application/json')
 
+        query_path = self.request.path
+        if query_path != "/task":
+            print(query_path)
+
         # {
         #     “images”:”原始图片目录，缺省默认为当前目录的images目录”,
         #     “step”:单个任务包的数量，缺省默认为20,
@@ -164,7 +168,7 @@ class TaskDivideHandler(tornado.web.RequestHandler):
 
                     self.prepare_extend(_csv_file=csv_file)
 
-                    task = Task(None, None, None, True)
+                    task = Task(None, None, None, None, True)
                     global_queue.divide_queue.put(task)
 
                     process = multiprocessing.Process(target=self.do_work)
@@ -331,6 +335,8 @@ class TaskDivideHandler(tornado.web.RequestHandler):
             _dest = task.dest_path
 
             img = cv2.imread(_src)
+            if not os.path.exists(_src) or img is None:
+                print(_src)
             width = img.shape[1]
             height = img.shape[0]
 
