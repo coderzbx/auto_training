@@ -140,7 +140,7 @@ if __name__ == "__main__":
     file_handler.setFormatter(formatter)  # 可以通过setFormatter指定输出格式
     logger.addHandler(file_handler)
 
-    # 指定日志的最低输出级别，默认为WARN级别
-    logger.setLevel(logging.WARNING)
+    # 指定日志的最低输出级别，默认为DEBUG级别
+    logger.setLevel(logging.DEBUG)
 
     tornado.ioloop.IOLoop.current().start()

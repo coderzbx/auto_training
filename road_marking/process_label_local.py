@@ -444,6 +444,8 @@ class ProcessLabelLocalHandler(tornado.web.RequestHandler):
         file_list = os.listdir(root_dir)
         for file_id in file_list:
             file_id = str(file_id).strip()
+            if file_id.endswith("txt"):
+                continue
             if file_id not in image_list:
                 file_delete = os.path.join(root_dir, file_id)
                 self.logger.error("package:{}, file wrong:[{}]".format(package_index, file_id))
