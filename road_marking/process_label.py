@@ -366,20 +366,20 @@ class ProcessLabelHandler(tornado.web.RequestHandler):
             width = img.shape[1]
             height = img.shape[0]
 
-            # other_category = -1
+            other_category = 255
             label_data = np.zeros((height, width), np.uint8)
-            label_data[0:height, 0:width] = 255
-            # for label in self_road_chn_labels:
-            #     if label.name == u"其他":
-            #         other_category = label.categoryId
-            #         break
+            for label in self_road_chn_labels:
+                if label.name == u"Ignore":
+                    other_category = label.categoryId
+                    break
+            label_data[0:height, 0:width] = other_category
 
             for label in self_road_chn_labels:
                 color = (label.color[2], label.color[1], label.color[0])
                 label_data[np.where((img == color).all(axis=2))] = label.categoryId
 
-            # 校验"其他"类别的占比
-            other_count = np.sum(label_data == 255)
+            # 校验"Ignore"类别的占比
+            other_count = np.sum(label_data == other_category)
             valid_count = width*height*0.01
             if other_count > valid_count:
                 label_name = os.path.basename(image_path)
