@@ -292,6 +292,9 @@ class ProcessLabelRemoteHandler(tornado.web.RequestHandler):
             width = img.shape[1]
             height = img.shape[0]
 
+            if width == 2448 and height == 1024:
+                continue
+
             crop_img = img[self.pixel:height - self.pixel, self.pixel:width - self.pixel]
             cv2.imwrite(_dest, crop_img)
 
