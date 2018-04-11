@@ -5,23 +5,20 @@ import errno
 import json
 import logging
 import os
-import shutil
 import signal
 
 import tornado.ioloop
 import tornado.web
 
-from road_marking.model_release import ModelReleaseHandler
 from road_marking.release_online import ReleaseOnlineHandler
 from road_marking.process_label import ProcessLabelHandler
 from road_marking.process_label_remote import ProcessLabelRemoteHandler
 from road_marking.process_label_local import ProcessLabelLocalHandler
 from road_marking.task_divide import TaskDivideHandler
 from road_marking.task_divide_remote import TaskDivideRemoteHandler
-from road_marking.training import StartTrainingHandler
 from road_marking.check_label import CheckLabelHandler
 
-from utils import host_ip, port
+import global_variables
 
 
 class MainHandler(tornado.web.RequestHandler):
@@ -30,34 +27,8 @@ class MainHandler(tornado.web.RequestHandler):
         self.set_header('Content-type', 'application/json')
 
         try:
-            src_dir = "/data/deeplearning/dataset/training/models/released"
-            dest_dir = "/data/deeplearning/dataset/training/models/prod"
-
             err_code = "0"
             err_info = "success"
-
-            if os.path.exists(src_dir):
-                model_file = os.listdir(src_dir)
-                model_exist = False
-                for model in model_file:
-                    name_list = str(model).split(".")
-                    if len(name_list) == 2:
-                        name_ext = name_list[1]
-                        if name_ext == "params":
-                            model_exist = True
-                            src_path = os.path.join(src_dir, model)
-                            dest_path = os.path.join(dest_dir, "camvid_decoder2-kd_cls6_s2_ep-0200.params")
-                            shutil.copyfile(src_path, dest_path)
-                        elif name_ext == "json":
-                            src_path = os.path.join(src_dir, model)
-                            dest_path = os.path.join(dest_dir, "camvid_decoder2-kd_cls9_s2_ep-symbol.json")
-                            shutil.copyfile(src_path, dest_path)
-                if not model_exist:
-                    err_code = "2"
-                    err_info = "none model file exist"
-            else:
-                err_code = "1"
-                err_info = "/data/deeplearning/dataset/training/models/released is not exist"
 
             json_res = {"code": err_code, "msg": err_info}
             res_str = json.dumps(json_res)
@@ -93,10 +64,8 @@ def make_app():
         (r"/task/remote", TaskDivideRemoteHandler),
         (r"/label", ProcessLabelHandler),
         (r"/label/remote", ProcessLabelRemoteHandler),
-        (r"/label_local", ProcessLabelLocalHandler),
+        (r"/label/local", ProcessLabelLocalHandler),
         (r"/check", CheckLabelHandler),
-        (r"/training", StartTrainingHandler),
-        (r"/release", ModelReleaseHandler),
         (r"/release/online", ReleaseOnlineHandler),
     ])
 
@@ -123,8 +92,9 @@ if __name__ == "__main__":
 
     app = make_app()
     try:
-        app.listen(port)
-        print("server start with[{}:{}]".format(host_ip, port))
+        app.listen(global_variables.port.value)
+        print("server start with[{}:{}]".format(global_variables.host_ip.value,
+                                                global_variables.port.value))
     except Exception as e:
         print("start error:{}".format(repr(e)))
         exit(0)
@@ -133,6 +103,20 @@ if __name__ == "__main__":
     cur_path = os.path.realpath(__file__)
     cur_dir = os.path.dirname(cur_path)
     log_file = os.path.join(cur_dir, "logs", "auto-training.log")
+
+    cur_path = os.path.realpath(__file__)
+    cur_dir = os.path.dirname(cur_path)
+    config_path = os.path.join(cur_dir, "recognition.conf")
+    if not os.path.exists(config_path):
+        config_path = None
+
+    if config_path is None or not os.path.exists(config_path):
+        print ("configure file server failed")
+        exit(0)
+
+    if not global_variables.init_params(config_path=config_path):
+        print ("server initial failed")
+        exit(0)
 
     formatter = logging.Formatter('%(asctime)s -%(name)s-%(levelname)s-%(module)s:%(message)s')
     # 文件日志

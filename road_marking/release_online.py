@@ -18,11 +18,11 @@ import numpy as np
 
 from utils import ServerResponse
 from utils import create_ssh_client
-from utils import host_ip
 from utils import OnlineTask
 from utils import self_road_chn_labels
 
 import global_queue
+import global_variables
 
 
 class ReleaseOnlineHandler(tornado.web.RequestHandler):
@@ -32,16 +32,29 @@ class ReleaseOnlineHandler(tornado.web.RequestHandler):
 
         self.src_dir = "/data/deeplearning/dataset/training/data/released"
         self.temp_dir = "/data/deeplearning/dataset/training/data/released_temp"
-        self.dest_dir = "/data/deeplearning/dataset/kd/lane"
+
+        if not os.path.exists(self.src_dir):
+            os.makedirs(self.src_dir)
+        if not os.path.exists(self.temp_dir):
+            os.makedirs(self.temp_dir)
+
+        self.dest_dir = global_variables.release_dir.value
 
         # self.released_url = "http://192.168.5.31:23300/kts/runtime/tasks?"
-        self.krs_url = "http://192.168.5.31:23100/krs/image/get?"
-        self.released_url = "http://192.168.5.31:23300/kts"
+        if not global_variables.krs_url.value.endswith("/"):
+            self.krs_url = global_variables.krs_url.value + "/image/get?"
+        else:
+            self.krs_url = global_variables.krs_url.value + "image/get?"
 
-        self.dest_scp_ip = "192.168.5.36"
-        self.dest_scp_port = 22
-        self.dest_scp_user = "kddev"
-        self.dest_scp_passwd = "12345678"
+        if not global_variables.release_url.value.endswith("/"):
+            self.released_url = global_variables.release_url.value
+        else:
+            self.released_url = global_variables.release_url.value[:-1]
+
+        self.dest_scp_ip = global_variables.model_host.value
+        self.dest_scp_port = global_variables.model_port.value
+        self.dest_scp_user = global_variables.model_user.value
+        self.dest_scp_passwd = global_variables.model_passwd.value
 
         self.dest_ssh = None
         self.dest_scp = None
@@ -101,20 +114,9 @@ class ReleaseOnlineHandler(tornado.web.RequestHandler):
 
             if not os.path.exists(self.src_dir):
                 os.makedirs(self.src_dir)
-            else:
-                if not os.path.exists(self.temp_dir):
-                    os.makedirs(self.temp_dir)
-                # else:
-                #     # clean this directory
-                #     tmp_dirs = os.listdir(self.temp_dir)
-                #     for tmp_dir in tmp_dirs:
-                #         if not tmp_dir.isdigit():
-                #             continue
-                #         tmp_path = os.path.join(self.temp_dir, tmp_dir)
-                #         if os.path.isfile(tmp_path):
-                #             os.remove(tmp_path)
-                #         else:
-                #             shutil.rmtree(tmp_path)
+
+            if not os.path.exists(self.temp_dir):
+                os.makedirs(self.temp_dir)
 
             # download released work
             release_url = "{}/mark/preSubmit".format(self.released_url)

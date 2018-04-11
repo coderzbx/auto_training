@@ -22,6 +22,7 @@ from utils import Task
 from label import self_road_chn_labels
 
 import global_queue
+import global_variables
 
 
 class ProcessLabelHandler(tornado.web.RequestHandler):
@@ -29,14 +30,26 @@ class ProcessLabelHandler(tornado.web.RequestHandler):
         self.file_list = list()
         self.pixel = 50
 
-        self.src_dir = "/data/deeplearning/dataset/training/data/released"
-        self.temp_dir = "/data/deeplearning/dataset/training/data/released_temp"
-        self.dest_dir = "/data/deeplearning/dataset/kd/lane"
+        self.src_dir = global_variables.check_dir.value
+        self.temp_dir = global_variables.check_dir.value + "_temp"
 
-        self.dest_scp_ip = "192.168.5.36"
-        self.dest_scp_port = 22
-        self.dest_scp_user = "kddev"
-        self.dest_scp_passwd = "12345678"
+        if not os.path.exists(self.src_dir):
+            os.makedirs(self.src_dir)
+        if not os.path.exists(self.temp_dir):
+            os.makedirs(self.temp_dir)
+
+        # self.dest_dir = "/data/deeplearning/dataset/kd/lane"
+        #
+        # self.dest_scp_ip = "192.168.5.36"
+        # self.dest_scp_port = 22
+        # self.dest_scp_user = "kddev"
+        # self.dest_scp_passwd = "12345678"
+
+        self.dest_dir = global_variables.release_dir.value
+        self.dest_scp_ip = global_variables.model_host.value
+        self.dest_scp_port = global_variables.model_port.value
+        self.dest_scp_user = global_variables.model_user.value
+        self.dest_scp_passwd = global_variables.model_passwd.value
 
         self.dest_ssh = None
         self.dest_scp = None

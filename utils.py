@@ -9,10 +9,7 @@ from collections import namedtuple
 Label = namedtuple(
     'Label', ['en_name', 'id', 'categoryId', 'color', 'name'])
 
-port = 7022
-host_ip = "192.168.5.38"
-context = "kss-auto-training"
-max_packages = 100000
+max_packages = 1000000
 
 self_road_chn_labels = {
     Label('other',          0, 0,     (64, 64, 32),       u'其他'),

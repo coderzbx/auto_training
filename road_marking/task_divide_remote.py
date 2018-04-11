@@ -8,16 +8,14 @@ import multiprocessing
 import logging
 
 import cv2
-import scp
 import numpy as np
 
 from utils import ServerResponse
 from utils import get_file
 from utils import RemoteTask
-from utils import create_ssh_client
-from utils import host_ip, max_packages
 
 import global_queue
+import global_variables
 
 
 class TaskDivideRemoteHandler(tornado.web.RequestHandler):
@@ -30,59 +28,12 @@ class TaskDivideRemoteHandler(tornado.web.RequestHandler):
 
         self.logger = logging.getLogger("auto-training")
 
-        self.src_dir = "/data/deeplearning/dataset/training/data/images"
-        self.dest_dir = "/data/deeplearning/dataset/training/data/packages"
-
-        self.src_scp_ip = "192.168.5.38"
-        self.src_scp_port = 22
-        self.src_scp_user = "kddev"
-        self.src_scp_passwd = "12345678"
-
-        self.src_ssh = None
-        self.src_scp = None
-        self.src_sftp = None
-
-        if self.src_scp_ip != host_ip:
-            self.src_ssh = create_ssh_client(
-                server=self.src_scp_ip,
-                port=self.src_scp_port,
-                user=self.src_scp_user,
-                password=self.src_scp_passwd
-            )
-            self.src_scp = scp.SCPClient(self.src_ssh.get_transport())
-            self.src_sftp = self.src_ssh.open_sftp()
-
-        self.dest_scp_ip = "192.168.5.38"
-        self.dest_scp_port = 22
-        self.dest_scp_user = "kddev"
-        self.dest_scp_passwd = "12345678"
-
-        self.dest_ssh = None
-        self.dest_scp = None
-        self.dest_sftp = None
-        if self.dest_scp_ip != host_ip:
-            self.dest_ssh = create_ssh_client(
-                server=self.dest_scp_ip,
-                port=self.dest_scp_port,
-                user=self.dest_scp_user,
-                password=self.dest_scp_passwd
-            )
-            self.dest_scp = scp.SCPClient(self.dest_ssh.get_transport())
-            self.dest_sftp = self.dest_ssh.open_sftp()
-
-    def __delete__(self, instance):
-        if self.src_scp:
-            self.src_scp.close()
-        if self.src_sftp:
-            self.src_sftp.close()
-        if self.src_ssh:
-            self.src_ssh.close()
-        if self.dest_scp:
-            self.dest_scp.close()
-        if self.dest_sftp:
-            self.dest_sftp.close()
-        if self.dest_ssh:
-            self.dest_ssh.close()
+        self.src_dir = global_variables.image_dir.value
+        if not os.path.exists(self.src_dir):
+            os.makedirs(self.src_dir)
+        self.dest_dir = global_variables.package_dir.value
+        if not os.path.exists(self.dest_dir):
+            os.makedirs(self.dest_dir)
 
     def get(self, *args, **kwargs):
         time_start = time.time()
@@ -102,18 +53,6 @@ class TaskDivideRemoteHandler(tornado.web.RequestHandler):
             step = self.get_argument("step", "20")
             step = int(step)
             self.step = step
-
-            if self.src_scp_ip != host_ip:
-                # 拷贝文件
-                if not os.path.exists(self.src_dir):
-                    os.makedirs(self.src_dir)
-                src_list = self.src_sftp.listdir(self.src_dir)
-                for src_file in src_list:
-                    src_path = os.path.join(self.src_dir, src_file)
-                    file_name = os.path.basename(src_path)
-                    name_list = file_name.split(".")
-                    if len(name_list) == 2 and name_list[1] in ["jpg", "png", "jpeg", "JPG", "PNG", "JPEG"]:
-                        self.src_scp.get(src_path, src_path)
 
             if not os.path.exists(self.src_dir):
                 task_count = 0

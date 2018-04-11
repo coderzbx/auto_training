@@ -19,6 +19,8 @@ from utils import Task
 from utils import self_road_chn_labels
 from model.model_check import CheckData
 
+import global_variables
+
 
 class CheckLabelHandler(tornado.web.RequestHandler):
     def initialize(self):
@@ -28,8 +30,12 @@ class CheckLabelHandler(tornado.web.RequestHandler):
         self.file_list = list()
         self.pixel = 50
 
-        self.src_dir = "/data/deeplearning/dataset/training/data/released"
-        self.temp_dir = "/data/deeplearning/dataset/training/data/released_temp"
+        self.src_dir = global_variables.check_dir.value
+        self.temp_dir = global_variables.check_dir.value + "_temp"
+        if not os.path.exists(self.src_dir):
+            os.makedirs(self.src_dir)
+        if not os.path.exists(self.temp_dir):
+            os.makedirs(self.temp_dir)
 
         if os.path.exists(self.temp_dir):
             file_list = os.listdir(self.temp_dir)
@@ -280,6 +286,9 @@ class CheckLabelHandler(tornado.web.RequestHandler):
             img = cv2.imread(_src)
             width = img.shape[1]
             height = img.shape[0]
+
+            if width == 2448 and height == 1024:
+                continue
 
             self.pixel = int((width - 2448) / 2)
             crop_img = img[self.pixel:height - self.pixel, self.pixel:width - self.pixel]

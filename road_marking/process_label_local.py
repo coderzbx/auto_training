@@ -33,6 +33,13 @@ class ProcessLabelLocalHandler(tornado.web.RequestHandler):
         self.temp_dir = "/data/deeplearning/dataset/training/data/local_temp"
         self.dest_dir = "/data/deeplearning/dataset/training/data/released_local"
 
+        if not os.path.exists(self.src_dir):
+            os.makedirs(self.src_dir)
+        if not os.path.exists(self.temp_dir):
+            os.makedirs(self.temp_dir)
+        if not os.path.exists(self.dest_dir):
+            os.makedirs(self.dest_dir)
+
         self.dest_scp_ip = "192.168.5.38"
         self.dest_scp_port = 22
         self.dest_scp_user = "kddev"
